@@ -17,13 +17,13 @@ public class Problem4 {
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher;
 
-//        final int NUMBER_WINNING_NUMBERS = 10;
-//        final int NUMBER_NUMBERS_YOU_HAVE = 25;
-//        final int MAX_NUMBER_OF_CARDS = 204;
+        final int NUMBER_WINNING_NUMBERS = 10;
+        final int NUMBER_NUMBERS_YOU_HAVE = 25;
+        final int MAX_NUMBER_OF_CARDS = 204;
 
-        final int NUMBER_WINNING_NUMBERS = 5;
-        final int NUMBER_NUMBERS_YOU_HAVE = 8;
-        final int MAX_NUMBER_OF_CARDS = 6;
+//        final int NUMBER_WINNING_NUMBERS = 5;
+//        final int NUMBER_NUMBERS_YOU_HAVE = 8;
+//        final int MAX_NUMBER_OF_CARDS = 6;
 
         int[] winningNumbers = new int[NUMBER_WINNING_NUMBERS];
         int[] numbersYouHave = new int[NUMBER_NUMBERS_YOU_HAVE];
@@ -37,7 +37,7 @@ public class Problem4 {
         Arrays.fill(numberOfCopiesOfCards, 1);
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(
-                "./res/it/samaki/adventOfCode2023/problem4/test1.txt"))) {
+                "./res/it/samaki/adventOfCode2023/problem4/test2.txt"))) {
             //For each card:
             while ((currentLine = bufferedReader.readLine()) != null) {
                 matcher = pattern.matcher(currentLine);
