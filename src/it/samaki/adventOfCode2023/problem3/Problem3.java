@@ -22,16 +22,16 @@ public class Problem3 {
         int partNumberSum = 0;
         int gearRatioSum = 0;
 
+        Pattern pattern1 = Pattern.compile("\\d+");
+        Pattern pattern2 = Pattern.compile("[^.\\d]");
+        Pattern pattern3 = Pattern.compile("[*]");
+
         try (BufferedReader input = new BufferedReader(new FileReader(
                 "./res/it/samaki/adventOfCode2023/problem3/test2.txt"))) {
-
             lastLine = input.readLine();
             currentLine = input.readLine();
 
             while ((nextLine = input.readLine()) != null) {
-                Pattern pattern1 = Pattern.compile("\\d+");
-                Pattern pattern2 = Pattern.compile("[^.\\d]");
-                Pattern pattern3 = Pattern.compile("[*]");
                 Matcher matcher1 = pattern1.matcher(lastLine);
                 Matcher matcher2 = pattern2.matcher(currentLine);
                 Matcher matcher3 = pattern1.matcher(nextLine);

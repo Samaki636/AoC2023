@@ -32,7 +32,6 @@ public class Problem2 {
 
         try (BufferedReader input = new BufferedReader(new FileReader(
                 "./res/it/samaki/adventOfCode2023/problem2/test2.txt"))) {
-
             while ((currentLine = input.readLine()) != null) {
                 int cubesNumber;
                 char cubesType;
