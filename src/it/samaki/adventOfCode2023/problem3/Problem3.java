@@ -53,8 +53,8 @@ public class Problem3 {
 
                 while(matcher2.find()) {
                     if(String.valueOf(lastLine.charAt(matcher2.start())).matches("\\d")
-                        || String.valueOf(lastLine.charAt(matcher2.start() - 1)).matches("\\d")
-                        || String.valueOf(lastLine.charAt(matcher2.start() + 1)).matches("\\d")) {
+                            || String.valueOf(lastLine.charAt(matcher2.start() - 1)).matches("\\d")
+                            || String.valueOf(lastLine.charAt(matcher2.start() + 1)).matches("\\d")) {
                         matcher1.reset();
                         while(matcher1.find()) {
                             if(matcher2.start() >= matcher1.start() - 1 && matcher2.start() < matcher1.end() + 1)
@@ -99,7 +99,7 @@ public class Problem3 {
 
                     //parti sulla riga corrente
                     if(String.valueOf(currentLine.charAt(matcher4.start() - 1)).matches("\\d") ||
-                        String.valueOf(currentLine.charAt(matcher4.end())).matches("\\d")) {
+                            String.valueOf(currentLine.charAt(matcher4.end())).matches("\\d")) {
                         matcher5.reset();
                         while(matcher5.find()) {
                             if(matcher5.end() == matcher4.start() || matcher5.start() - 1 == matcher4.start())
