@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="SpellingInspectionScope" pattern="!src:it.samaki.adventOfCode2023.*.java&amp;&amp;!lib:*..*&amp;&amp;!src:it.samaki.adventOfCode2023.problem2.Problem2&amp;&amp;!src:it.samaki.adventOfCode2023.problem1.Problem1" />
+</component>
