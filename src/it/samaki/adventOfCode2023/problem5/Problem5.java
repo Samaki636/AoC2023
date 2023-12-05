@@ -2,7 +2,6 @@ package it.samaki.adventOfCode2023.problem5;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -47,7 +46,6 @@ public class Problem5 {
                         matcher.find();
                         seeds[i] = Long.parseLong(matcher.group());
                     }
-                    Arrays.sort(seeds);
                 }
 
                 //Put the seeds in the first LinkedList of attributes
