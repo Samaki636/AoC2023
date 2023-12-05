@@ -19,67 +19,83 @@ public class Problem5 {
 
         String line;
 
-        final int NUMBER_OF_SEEDS = 4;
-        //final int NUMBER_OF_SEEDS = 20;
+        //final int NUMBER_OF_SEEDS = 4;
+        final int NUMBER_OF_SEEDS = 20;
         final int NUMBER_OF_ATTRIBUTES = 8;
 
-        int destinationRangeStart;
-        int sourceRangeStart;
-        int rangeLength;
+        long destinationRangeStart;
+        long sourceRangeStart;
+        long rangeLength;
 
-        Integer[] seeds = new Integer[NUMBER_OF_SEEDS];
-        LinkedList<Integer>[] attributes = new LinkedList[NUMBER_OF_ATTRIBUTES];
+        long[] seeds = new long[NUMBER_OF_SEEDS];
+        LinkedList<Long>[] attributes = new LinkedList[NUMBER_OF_ATTRIBUTES];
 
-        for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
+        for (int i = 1; i < NUMBER_OF_ATTRIBUTES; i++) {
             attributes[i] = new LinkedList<>();
+            for (int j = 0; j < NUMBER_OF_SEEDS; j++) {
+                attributes[i].add((long) -1);
+            }
         }
 
         try (Scanner scanner = new Scanner(new FileReader(
-                "./res/it/samaki/adventOfCode2023/problem5/test1.txt"))) {
+                "./res/it/samaki/adventOfCode2023/problem5/test2.txt"))) {
             while (scanner.hasNext()) {
-                //Read all the seeds numbers, put them in seeds and sort them.
+                //Read all the seeds numbers, put them in seeds and sort them
                 while (!(line = scanner.nextLine()).isEmpty()) {
                     matcher = pattern.matcher(line);
                     for (int i = 0; i < NUMBER_OF_SEEDS; i++) {
                         matcher.find();
-                        seeds[i] = Integer.parseInt(matcher.group());
+                        seeds[i] = Long.parseLong(matcher.group());
                     }
                     Arrays.sort(seeds);
                 }
 
                 //Put the seeds in the first LinkedList of attributes
+                attributes[0] = new LinkedList<>();
                 for (int i = 0; i < NUMBER_OF_SEEDS; i++) {
                     attributes[0].add(seeds[i]);
                 }
 
-                //Read the seed to soil map
-                scanner.nextLine();
-                while (!(line = scanner.nextLine()).isEmpty()) {
-                    matcher = pattern.matcher(line);
+                //Read all the maps
+                for (int k = 0; k < NUMBER_OF_ATTRIBUTES - 1; k++) {
+                    scanner.nextLine();
 
-                    matcher.find();
-                    destinationRangeStart = Integer.parseInt(matcher.group());
-                    matcher.find();
-                    sourceRangeStart = Integer.parseInt(matcher.group());
-                    matcher.find();
-                    rangeLength = Integer.parseInt(matcher.group());
+                    for (int i = 0; i < NUMBER_OF_SEEDS; i++)
+                        attributes[k + 1].set(i, attributes[k].get(i));
 
-                    for (int i = 0; i < rangeLength; i++) {
-                        int seed;
-                        int fertilizer;
+                    while (!(line = scanner.nextLine()).isEmpty() && scanner.hasNext()) {
+                        matcher = pattern.matcher(line);
 
-                        seed = sourceRangeStart + i;
-                        fertilizer = destinationRangeStart + i;
+                        matcher.find();
+                        destinationRangeStart = Long.parseLong(matcher.group());
+                        matcher.find();
+                        sourceRangeStart = Long.parseLong(matcher.group());
+                        matcher.find();
+                        rangeLength = Long.parseLong(matcher.group());
 
-                        if (!attributes[0].contains(seed))
-                            break;
+                        for (int i = 0; i < rangeLength; i++) {
+                            long attributeSource;
+                            long attributeDestination;
 
-                        for (int j = 0; j < NUMBER_OF_SEEDS; j++) {
-                            attributes[1].add(attributes[0].indexOf(seed), fertilizer);
+                            attributeSource = sourceRangeStart + i;
+                            attributeDestination = destinationRangeStart + i;
+
+                            if (!attributes[k].contains(attributeSource) && k == 0)
+                                continue;
+
+                            if (!attributes[k].contains(attributeSource))
+                                continue;
+
+                            attributes[k + 1].set(attributes[k].indexOf(attributeSource), attributeDestination);
                         }
                     }
                 }
-                //TODO Delete this line;
+            }
+        }
+        Arrays.sort(attributes[NUMBER_OF_ATTRIBUTES - 1].toArray());
+        for (long element : attributes[NUMBER_OF_ATTRIBUTES -1]) {
+            if (element != 0) {
+                System.out.println("The closes location that needs a seed is the number: " + element);
                 break;
             }
         }
