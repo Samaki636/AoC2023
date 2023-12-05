@@ -73,20 +73,12 @@ public class Problem5 {
                         matcher.find();
                         rangeLength = Long.parseLong(matcher.group());
 
-                        for (int i = 0; i < rangeLength; i++) {
-                            long attributeSource;
-                            long attributeDestination;
-
-                            attributeSource = sourceRangeStart + i;
-                            attributeDestination = destinationRangeStart + i;
-
-                            if (!attributes[k].contains(attributeSource) && k == 0)
-                                continue;
-
-                            if (!attributes[k].contains(attributeSource))
-                                continue;
-
-                            attributes[k + 1].set(attributes[k].indexOf(attributeSource), attributeDestination);
+                        for (int i = 0; i < NUMBER_OF_SEEDS; i++) {
+                            if (attributes[k].get(i) >= sourceRangeStart &&
+                                    attributes[k].get(i) < sourceRangeStart + rangeLength) {
+                                attributes[k + 1].set(i, destinationRangeStart +
+                                        attributes[k].get(i) - sourceRangeStart);
+                            }
                         }
                     }
                 }
