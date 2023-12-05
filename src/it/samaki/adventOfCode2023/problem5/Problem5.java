@@ -84,12 +84,10 @@ public class Problem5 {
                 }
             }
         }
-        Arrays.sort(attributes[NUMBER_OF_ATTRIBUTES - 1].toArray());
-        for (long element : attributes[NUMBER_OF_ATTRIBUTES -1]) {
-            if (element != 0) {
-                System.out.println("The closes location that needs a seed is the number: " + element);
-                break;
-            }
-        }
+        long min = attributes[NUMBER_OF_ATTRIBUTES - 1].get(0);
+        for (Long number : attributes[NUMBER_OF_ATTRIBUTES - 1])
+            if (min > number)
+                min = number;
+        System.out.println("The closes location that needs a seed is the number: " + min);
     }
 }
