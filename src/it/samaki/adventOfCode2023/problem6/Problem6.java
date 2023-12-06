@@ -15,15 +15,19 @@ public class Problem6 {
         String recordLine;
 
         int time;
-        int record;
         int speed = 0;
-        int distance;
         int waysToWin = 0;
         int waysToWinTotal = 1;
 
-        Pattern pattern = Pattern.compile("\\d+");
+        long record;
+        long distance;
+
+        Pattern pattern1 = Pattern.compile("\\d+");
+        Pattern pattern2 = Pattern.compile("\\d");
         Matcher matcherTime;
         Matcher matcherDistance;
+
+        StringBuilder stringBuilder;
 
         try (Scanner scanner = new Scanner(new File(
                 "./res/it/samaki/adventOfCode2023/problem6/test2.txt"))) {
@@ -31,8 +35,8 @@ public class Problem6 {
             recordLine = scanner.nextLine();
         }
 
-        matcherTime = pattern.matcher(timeLine);
-        matcherDistance = pattern.matcher(recordLine);
+        matcherTime = pattern1.matcher(timeLine);
+        matcherDistance = pattern1.matcher(recordLine);
         while (matcherTime.find() & matcherDistance.find()) {
             time = Integer.parseInt(matcherTime.group());
             record = Integer.parseInt(matcherDistance.group());
@@ -40,7 +44,7 @@ public class Problem6 {
             //i is the time the button remain pressed, for i = 0 and i = time the distance = 0
             for (int i = 1; i < time; i++) {
                 speed++;
-                distance = speed * (time - i);
+                distance = (long) speed * (time - i);
                 if (record < distance)
                     waysToWin++;
             }
@@ -50,5 +54,26 @@ public class Problem6 {
             waysToWin = 0;
         }
         System.out.println("The product of the number of ways to win each race is: " + waysToWinTotal);
+
+        matcherTime = pattern2.matcher(timeLine);
+        matcherDistance = pattern2.matcher(recordLine);
+
+        stringBuilder = new StringBuilder();
+        while (matcherTime.find())
+            stringBuilder.append(matcherTime.group());
+        time = Integer.parseInt(stringBuilder.toString());
+
+        stringBuilder = new StringBuilder();
+        while (matcherDistance.find())
+            stringBuilder.append(matcherDistance.group());
+        record = Long.parseLong(stringBuilder.toString());
+
+        for (int i = 1; i < time; i++) {
+            speed++;
+            distance = (long) speed * (time - i);
+            if (record < distance)
+                waysToWin++;
+        }
+        System.out.println("The number of ways to win long race is: " + waysToWin);
     }
 }
