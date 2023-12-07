@@ -10,24 +10,30 @@ import java.util.regex.Pattern;
 public class Problem1 {
     public static void main(String[] args) throws IOException {
         int sumOfValues = 0;
+        int firstNumberPos;
+        int lastNumberPos;
+
+        String currentLine;
+        String currentLineValue;
+        String firstNumber;
+        String lastNumber;
+
+        Pattern pattern = Pattern.compile("\\d");
+        Matcher matcher;
+
+        String[] subset = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 
         try (BufferedReader input = new BufferedReader(new FileReader(
                 "./res/it/samaki/adventOfCode2023/problem1/test2.txt"))) {
-            String currentLine;
-            String currentLineValue;
-            int firstNumberPos;
-            String firstNumber;
-            int lastNumberPos;
-            String lastNumber;
-            String[] subset = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-
             while ((currentLine = input.readLine()) != null) {
-                currentLine = currentLine.toLowerCase();
+                matcher = pattern.matcher(currentLine);
+
                 firstNumberPos = -1;
                 firstNumber = "";
                 lastNumberPos = -1;
                 lastNumber = "";
 
+                //Get first word
                 for(String word : subset) {
                     if(currentLine.contains(word)) {
                         if(firstNumber.isEmpty()) {
@@ -41,9 +47,6 @@ public class Problem1 {
                     }
                 }
 
-                Pattern pattern = Pattern.compile("\\d");
-                Matcher matcher = pattern.matcher(currentLine);
-
                 if(matcher.find()) {
                     String tmp = matcher.group();
                     if(firstNumberPos == -1) {
@@ -53,35 +56,14 @@ public class Problem1 {
                             tmp = String.valueOf(tmp.charAt(0));
                             currentLineValue = tmp;
                         } else {
-                            currentLineValue = switch (firstNumber) {
-                                case "one" -> "1";
-                                case "two" -> "2";
-                                case "three" -> "3";
-                                case "four" -> "4";
-                                case "five" -> "5";
-                                case "six" -> "6";
-                                case "seven" -> "7";
-                                case "eight" -> "8";
-                                case "nine" -> "9";
-                                default -> null;
-                            };
+                            currentLineValue = toDigit(firstNumber);
                         }
                     }
                 } else {
-                    currentLineValue = switch (firstNumber) {
-                        case "one" -> "1";
-                        case "two" -> "2";
-                        case "three" -> "3";
-                        case "four" -> "4";
-                        case "five" -> "5";
-                        case "six" -> "6";
-                        case "seven" -> "7";
-                        case "eight" -> "8";
-                        case "nine" -> "9";
-                        default -> null;
-                    };
+                    currentLineValue = toDigit(firstNumber);
                 }
 
+                //Get last word
                 for(String word : subset) {
                     if(currentLine.contains(word)) {
                         if(lastNumber.isEmpty()) {
@@ -104,37 +86,32 @@ public class Problem1 {
                     if(tmp2.length() - tmp2.indexOf(tmp) > lastNumberPos) {
                         currentLineValue += tmp;
                     } else {
-                        currentLineValue += switch (lastNumber) {
-                            case "one" -> "1";
-                            case "two" -> "2";
-                            case "three" -> "3";
-                            case "four" -> "4";
-                            case "five" -> "5";
-                            case "six" -> "6";
-                            case "seven" -> "7";
-                            case "eight" -> "8";
-                            case "nine" -> "9";
-                            default -> null;
-                        };
+                        currentLineValue += toDigit(lastNumber);
                     }
                 } else {
-                    currentLineValue += switch (lastNumber) {
-                        case "one" -> "1";
-                        case "two" -> "2";
-                        case "three" -> "3";
-                        case "four" -> "4";
-                        case "five" -> "5";
-                        case "six" -> "6";
-                        case "seven" -> "7";
-                        case "eight" -> "8";
-                        case "nine" -> "9";
-                        default -> null;
-                    };
+                    currentLineValue += toDigit(lastNumber);
                 }
 
                 sumOfValues += Integer.parseInt(currentLineValue, 10);
             }
             System.out.println("The sum of all of the calibration values is: " + sumOfValues);
         }
+    }
+
+    private static String toDigit(String string) {
+        String digit;
+        digit = switch (string) {
+            case "one" -> "1";
+            case "two" -> "2";
+            case "three" -> "3";
+            case "four" -> "4";
+            case "five" -> "5";
+            case "six" -> "6";
+            case "seven" -> "7";
+            case "eight" -> "8";
+            case "nine" -> "9";
+            default -> null;
+        };
+        return digit;
     }
 }
