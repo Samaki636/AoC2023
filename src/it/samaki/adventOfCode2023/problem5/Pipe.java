@@ -8,12 +8,14 @@ public class Pipe implements Comparable {
     private final long inputEnd;
     private final long range;
     private final long outputStart;
+    private final long outputEnd;
 
     public Pipe(long inputStart, long range, long outputStart) {
         this.inputStart = inputStart;
         this.inputEnd = inputStart + range;
         this.range = range;
         this.outputStart = outputStart;
+        this.outputEnd = outputStart + range;
     }
 
     public long process(Bucket bucket) {
@@ -25,7 +27,7 @@ public class Pipe implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return Long.compare(inputStart, ((Pipe) o).getInputStart());
+        return Long.compare(outputStart, ((Pipe) o).getOutputStart());
     }
 
     public long getInputStart() {
@@ -42,5 +44,9 @@ public class Pipe implements Comparable {
 
     public long getOutputStart() {
         return outputStart;
+    }
+
+    public long getOutputEnd() {
+        return outputEnd;
     }
 }

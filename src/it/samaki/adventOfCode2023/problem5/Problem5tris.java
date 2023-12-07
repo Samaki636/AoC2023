@@ -86,11 +86,65 @@ public class Problem5tris {
             }
         }
 
-//        for (Long value : seedBuckets.keySet()) {
-//            for (Pipe pipe : seedToSoilPipes) {
-//                if (value >= pipe.getInputStart() && value < pipe.getInputEnd())
-//                    ;
-//            }
-//        }
+        for (Pipe pipe1 : humidityToLocationPiepes) {
+            long outputStart = pipe1.getInputStart();
+            long outputEnd = pipe1.getInputEnd();
+            long inputStart;
+            for (Pipe pipe2 : temperatureToHumidityPipes) {
+                inputStart = pipe2.getOutputStart();
+                if (inputStart > outputStart && inputStart < outputEnd) {
+                    System.out.print("\nPipe1: " + humidityToLocationPiepes.indexOf(pipe1) +
+                            " Pipe2: " + temperatureToHumidityPipes.indexOf(pipe2));
+                    outputStart = pipe2.getInputStart();
+                    outputEnd = pipe2.getInputEnd();
+                    for (Pipe pipe3 : lightToTemperaturePipes) {
+                        inputStart = pipe3.getOutputStart();
+                        if (inputStart > outputStart && inputStart < outputEnd) {
+                            System.out.print(" Pipe2: " + temperatureToHumidityPipes.indexOf(pipe2) +
+                                    " Pipe3: " + lightToTemperaturePipes.indexOf(pipe3));
+                            outputStart = pipe3.getInputStart();
+                            outputEnd = pipe3.getInputEnd();
+                            for (Pipe pipe4 : waterToLightPipes) {
+                                inputStart = pipe4.getOutputStart();
+                                if (inputStart > outputStart && inputStart < outputEnd) {
+                                    System.out.print(" Pipe3: " + lightToTemperaturePipes.indexOf(pipe3) +
+                                            " Pipe4: " + waterToLightPipes.indexOf(pipe4));
+                                    outputStart = pipe4.getInputStart();
+                                    outputEnd = pipe4.getInputEnd();
+                                    for (Pipe pipe5 : fertilizerToWaterPipes) {
+                                        inputStart = pipe5.getOutputStart();
+                                        if (inputStart > outputStart && inputStart < outputEnd) {
+                                            System.out.print(" pipe4: " + waterToLightPipes.indexOf(pipe4) +
+                                                    " Pipe5: " + fertilizerToWaterPipes.indexOf(pipe5));
+                                            outputStart = pipe5.getInputStart();
+                                            outputEnd = pipe5.getInputEnd();
+                                            for (Pipe pipe6 : soilToFertilizerPipes) {
+                                                inputStart = pipe6.getOutputStart();
+                                                if (inputStart > outputStart && inputStart < outputEnd) {
+                                                    System.out.print(" Pipe5: " + fertilizerToWaterPipes.indexOf(pipe5) +
+                                                            " Pipe6: " + soilToFertilizerPipes.indexOf(pipe6));
+                                                    outputStart = pipe6.getInputStart();
+                                                    outputEnd = pipe6.getInputEnd();
+                                                    for (Pipe pipe7 : seedToSoilPipes) {
+                                                        inputStart = pipe7.getOutputStart();
+                                                        if (inputStart > outputStart && inputStart < outputEnd) {
+                                                            System.out.print(" Pipe6: " + soilToFertilizerPipes.indexOf(pipe6) +
+                                                                    " Pipe7: " + seedToSoilPipes.indexOf(pipe7));
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    outputStart = pipe1.getInputStart();
+                    outputEnd = pipe1.getInputEnd();
+                }
+            }
+        }
     }
 }
