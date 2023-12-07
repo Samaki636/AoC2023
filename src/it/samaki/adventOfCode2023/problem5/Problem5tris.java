@@ -15,14 +15,6 @@ import java.util.regex.Pattern;
 public class Problem5tris {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main(String[] args) throws FileNotFoundException {
-        String line;
-
-        long destinationStart;
-        long sourceStart;
-        long range;
-        long seedStart;
-        long seedRange;
-
         Map<Long, Long> seedBuckets = new HashMap<>();
 
         LinkedList<Pipe> seedToSoilPipes = new LinkedList<>();
@@ -36,13 +28,19 @@ public class Problem5tris {
         Pattern pattern = Pattern.compile("\\d+");
 
         Matcher matcher1;
-        Matcher matcher2;
 
         PipeComparator pipeComparator = new PipeComparator();
 
         final int NUMBER_OF_ATTRIBUTES = 7;
 
         try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem5/test2.txt"))) {
+            long seedStart;
+            long seedRange;
+
+            long destinationStart;
+            long sourceStart;
+            long range;
+
             matcher1 = pattern.matcher(scanner.nextLine());
             while (matcher1.find()) {
                 seedStart = Long.parseLong(matcher1.group());
@@ -55,14 +53,10 @@ public class Problem5tris {
             for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
                 scanner.nextLine();
                 scanner.nextLine();
-                while (scanner.hasNext() && !(line = scanner.nextLine()).isEmpty()) {
-                    matcher2 = pattern.matcher(line);
-                    matcher2.find();
-                    destinationStart = Long.parseLong(matcher2.group());
-                    matcher2.find();
-                    sourceStart = Long.parseLong(matcher2.group());
-                    matcher2.find();
-                    range = Long.parseLong(matcher2.group());
+                while (scanner.hasNextLong()) {
+                    destinationStart = scanner.nextLong();
+                    sourceStart = scanner.nextLong();
+                    range = scanner.nextLong();
 
                     switch (i) {
                         case 0 -> seedToSoilPipes.add(new Pipe(sourceStart, range, destinationStart));
@@ -83,68 +77,104 @@ public class Problem5tris {
                     case 5 -> temperatureToHumidityPipes.sort(pipeComparator);
                     case 6 -> humidityToLocationPiepes.sort(pipeComparator);
                 }
+                if (scanner.hasNextLine())
+                    scanner.nextLine();
             }
         }
 
-        for (Pipe pipe1 : humidityToLocationPiepes) {
-            long outputStart = pipe1.getInputStart();
-            long outputEnd = pipe1.getInputEnd();
-            long inputStart;
-            for (Pipe pipe2 : temperatureToHumidityPipes) {
-                inputStart = pipe2.getOutputStart();
-                if (inputStart > outputStart && inputStart < outputEnd) {
-                    System.out.print("\nPipe1: " + humidityToLocationPiepes.indexOf(pipe1) +
-                            " Pipe2: " + temperatureToHumidityPipes.indexOf(pipe2));
-                    outputStart = pipe2.getInputStart();
-                    outputEnd = pipe2.getInputEnd();
-                    for (Pipe pipe3 : lightToTemperaturePipes) {
-                        inputStart = pipe3.getOutputStart();
-                        if (inputStart > outputStart && inputStart < outputEnd) {
-                            System.out.print(" Pipe2: " + temperatureToHumidityPipes.indexOf(pipe2) +
-                                    " Pipe3: " + lightToTemperaturePipes.indexOf(pipe3));
-                            outputStart = pipe3.getInputStart();
-                            outputEnd = pipe3.getInputEnd();
-                            for (Pipe pipe4 : waterToLightPipes) {
-                                inputStart = pipe4.getOutputStart();
-                                if (inputStart > outputStart && inputStart < outputEnd) {
-                                    System.out.print(" Pipe3: " + lightToTemperaturePipes.indexOf(pipe3) +
-                                            " Pipe4: " + waterToLightPipes.indexOf(pipe4));
-                                    outputStart = pipe4.getInputStart();
-                                    outputEnd = pipe4.getInputEnd();
-                                    for (Pipe pipe5 : fertilizerToWaterPipes) {
-                                        inputStart = pipe5.getOutputStart();
-                                        if (inputStart > outputStart && inputStart < outputEnd) {
-                                            System.out.print(" pipe4: " + waterToLightPipes.indexOf(pipe4) +
-                                                    " Pipe5: " + fertilizerToWaterPipes.indexOf(pipe5));
-                                            outputStart = pipe5.getInputStart();
-                                            outputEnd = pipe5.getInputEnd();
-                                            for (Pipe pipe6 : soilToFertilizerPipes) {
-                                                inputStart = pipe6.getOutputStart();
-                                                if (inputStart > outputStart && inputStart < outputEnd) {
-                                                    System.out.print(" Pipe5: " + fertilizerToWaterPipes.indexOf(pipe5) +
-                                                            " Pipe6: " + soilToFertilizerPipes.indexOf(pipe6));
-                                                    outputStart = pipe6.getInputStart();
-                                                    outputEnd = pipe6.getInputEnd();
-                                                    for (Pipe pipe7 : seedToSoilPipes) {
-                                                        inputStart = pipe7.getOutputStart();
-                                                        if (inputStart > outputStart && inputStart < outputEnd) {
-                                                            System.out.print(" Pipe6: " + soilToFertilizerPipes.indexOf(pipe6) +
-                                                                    " Pipe7: " + seedToSoilPipes.indexOf(pipe7));
+        long range;
+        long destinationRangeStart;
+        long sourceRangeStart;
+        long sourceRangeEnd;
+        long value = -1;
+        long nearestPosition = Long.MAX_VALUE;
 
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+        for (long startingSeed : seedBuckets.keySet()) {
+            range = seedBuckets.get(startingSeed);
+            for (long i = startingSeed; i < startingSeed + range; i++) {
+                for (Pipe pipe : seedToSoilPipes) {
+                    destinationRangeStart = pipe.getOutputStart();
+                    sourceRangeStart = pipe.getInputStart();
+                    sourceRangeEnd = pipe.getInputEnd();
+
+                    if (i >= sourceRangeStart && i < sourceRangeEnd) {
+                        value = destinationRangeStart + i - sourceRangeStart;
+                        break;
                     }
-                    outputStart = pipe1.getInputStart();
-                    outputEnd = pipe1.getInputEnd();
+                }
+                if(value < 0) value = startingSeed;
+
+                for (Pipe pipe : soilToFertilizerPipes) {
+                    destinationRangeStart = pipe.getOutputStart();
+                    sourceRangeStart = pipe.getInputStart();
+                    sourceRangeEnd = pipe.getInputEnd();
+
+                    if (value >= sourceRangeStart && value < sourceRangeEnd) {
+                        value = destinationRangeStart + value - sourceRangeStart;
+                        break;
+                    }
+                }
+
+                for (Pipe pipe : fertilizerToWaterPipes) {
+                    destinationRangeStart = pipe.getOutputStart();
+                    sourceRangeStart = pipe.getInputStart();
+                    sourceRangeEnd = pipe.getInputEnd();
+
+                    if (value >= sourceRangeStart && value < sourceRangeEnd) {
+                        value = destinationRangeStart + value - sourceRangeStart;
+                        break;
+                    }
+                }
+
+                for (Pipe pipe : waterToLightPipes) {
+                    destinationRangeStart = pipe.getOutputStart();
+                    sourceRangeStart = pipe.getInputStart();
+                    sourceRangeEnd = pipe.getInputEnd();
+
+                    if (value >= sourceRangeStart && value < sourceRangeEnd) {
+                        value = destinationRangeStart + value - sourceRangeStart;
+                        break;
+                    }
+                }
+
+                for (Pipe pipe : lightToTemperaturePipes) {
+                    destinationRangeStart = pipe.getOutputStart();
+                    sourceRangeStart = pipe.getInputStart();
+                    sourceRangeEnd = pipe.getInputEnd();
+
+                    if (value >= sourceRangeStart && value < sourceRangeEnd) {
+                        value = destinationRangeStart + value - sourceRangeStart;
+                        break;
+                    }
+                }
+
+                for (Pipe pipe : temperatureToHumidityPipes) {
+                    destinationRangeStart = pipe.getOutputStart();
+                    sourceRangeStart = pipe.getInputStart();
+                    sourceRangeEnd = pipe.getInputEnd();
+
+                    if (value >= sourceRangeStart && value < sourceRangeEnd) {
+                        value = destinationRangeStart + value - sourceRangeStart;
+                        break;
+                    }
+                }
+
+                for (Pipe pipe: humidityToLocationPiepes) {
+                    destinationRangeStart = pipe.getOutputStart();
+                    sourceRangeStart = pipe.getInputStart();
+                    sourceRangeEnd = pipe.getInputEnd();
+
+                    if (value >= sourceRangeStart && value < sourceRangeEnd) {
+                        value = destinationRangeStart + value - sourceRangeStart;
+                        break;
+                    }
+                }
+                if (nearestPosition > value) {
+                    System.out.println("Temporary nearest position: " + value);
+                    nearestPosition = value;
                 }
             }
         }
+        System.out.println("The closes location that needs a seed is the number: " + nearestPosition);
     }
 }

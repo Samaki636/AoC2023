@@ -47,25 +47,31 @@ public class Problem5bis {
             scanner.nextLine();
             scanner.nextLine();
 
-            for (int i = 4; i < 51; i++) seedToSoilMap.append(scanner.nextLine()).append("\n");
+            while (scanner.hasNextLong()) seedToSoilMap.append(scanner.nextLong()).append(" ");
             scanner.nextLine();
             scanner.nextLine();
-            for (int i = 53; i < 81; i++) soilToFertilizerMap.append(scanner.nextLine()).append("\n");
+            scanner.nextLine();
+            while (scanner.hasNextLong()) soilToFertilizerMap.append(scanner.nextLong()).append(" ");
             scanner.nextLine();
             scanner.nextLine();
-            for (int i = 83; i < 127; i++) fertilizerToWaterMap.append(scanner.nextLine()).append("\n");
+            scanner.nextLine();
+            while (scanner.hasNextLong()) fertilizerToWaterMap.append(scanner.nextLong()).append(" ");
             scanner.nextLine();
             scanner.nextLine();
-            for (int i = 129; i < 138; i++) waterToLightMap.append(scanner.nextLine()).append("\n");
+            scanner.nextLine();
+            while (scanner.hasNextLong()) waterToLightMap.append(scanner.nextLong()).append(" ");
             scanner.nextLine();
             scanner.nextLine();
-            for (int i = 140; i < 172; i++) lightToTemperatureMap.append(scanner.nextLine()).append("\n");
+            scanner.nextLine();
+            while (scanner.hasNextLong()) lightToTemperatureMap.append(scanner.nextLong()).append(" ");
             scanner.nextLine();
             scanner.nextLine();
-            for (int i = 174; i < 210; i++) temperatureToHumidity.append(scanner.nextLine()).append("\n");
+            scanner.nextLine();
+            while (scanner.hasNextLong()) temperatureToHumidity.append(scanner.nextLong()).append(" ");
             scanner.nextLine();
             scanner.nextLine();
-            for (int i = 212; i < 251; i++) humidityToLocation.append(scanner.nextLine()).append("\n");
+            scanner.nextLine();
+            while (scanner.hasNextLong()) humidityToLocation.append(scanner.nextLong()).append(" ");
         }
 
         matcher1 = pattern.matcher(seeds);
@@ -77,7 +83,6 @@ public class Problem5bis {
         matcher7 = pattern.matcher(temperatureToHumidity);
         matcher8 = pattern.matcher(humidityToLocation);
 
-        Comparator<Bucket> bucketComparator = new BucketComparator();
         LinkedList<Bucket> buckets = new LinkedList<>();
         while (matcher1.find()) {
             startingSeed = Long.parseLong(matcher1.group());
@@ -85,7 +90,7 @@ public class Problem5bis {
             range = Long.parseLong(matcher1.group());
             buckets.add(new Bucket(startingSeed, range));
         }
-        buckets.sort(bucketComparator);
+        buckets.sort(new BucketComparator());
 
         startingSeed = buckets.get(7).start();
         range = buckets.get(7).range();
