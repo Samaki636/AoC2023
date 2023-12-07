@@ -15,36 +15,64 @@ public class Hand implements Comparable<Hand> {
         this.hand = hand;
         this.bid = bid;
         formatHand();
-        computeStrength();
+        computeType();
     }
 
     private void formatHand() {
         formattedHand = hand.replace('T', ':');
-        formattedHand = formattedHand.replace('J', ';');
-        formattedHand = formattedHand.replace('Q', '<');
-        formattedHand = formattedHand.replace('K', '=');
-        formattedHand = formattedHand.replace('A', '>');
+        formattedHand = formattedHand.replace('J', '1');
+        formattedHand = formattedHand.replace('Q', ';');
+        formattedHand = formattedHand.replace('K', '<');
+        formattedHand = formattedHand.replace('A', '=');
     }
 
-    private void computeStrength() {
+    private void computeType() {
         int[] count = new int[13];
         for (char c : formattedHand.toCharArray())
-            count[c - '2']++;
+            count[c - '1']++;
         Arrays.sort(count);
         if (count[12] == 5)
             type = 6;
-        else if (count[12] == 4)
+        if (count[12] == 4)
             type = 5;
-        else if (count[12] == 3 && count[11] == 2)
+        if (count[12] == 3 && count[11] == 2)
             type = 4;
-        else if (count[12] == 3)
+        if (count[12] == 3 && count[11] != 2)
             type = 3;
-        else if (count[12] == 2 && count[11] == 2)
+        if (count[12] == 2 && count[11] == 2)
             type = 2;
-        else if (count[12] == 2)
+        if (count[12] == 2 && count[11] != 2)
             type = 1;
-        else if (count[12] == 1)
+        if (count[12] == 1)
             type = 0;
+
+        if (count[12] == 4 && (formattedHand.length() - formattedHand.replace("1", "").length() == 1))
+            type = 6;
+        if (count[12] == 3 && count[11] != 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 1))
+            type = 5;
+        if (count[12] == 2 && count[11] == 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 1))
+            type = 4;
+        if (count[12] == 2 && count[11] != 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 1))
+            type = 3;
+        if (count[12] == 1 && (formattedHand.length() - formattedHand.replace("1", "").length() == 1))
+            type = 1;
+
+        if (count[12] == 3 && count[11] == 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 2))
+            type = 6;
+        if (count[12] == 2 && count[11] == 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 2))
+            type = 5;
+        if (count[12] == 2 && count[11] != 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 2))
+            type = 3;
+
+        if (count[12] == 3 && count[11] != 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 3))
+            type = 5;
+        if (count[12] == 3 && count[11] == 2 && (formattedHand.length() - formattedHand.replace("1", "").length() == 3))
+            type = 6;
+
+        if (count[12] == 4 && (formattedHand.length() - formattedHand.replace("1", "").length() == 4))
+            type = 6;
+
+        formatHand();
     }
 
     @Override
@@ -62,10 +90,6 @@ public class Hand implements Comparable<Hand> {
                 return Integer.compare(this.formattedHand.charAt(i), hand.charAt(i));
         }
         return 0;
-    }
-
-    public String getHand() {
-        return hand;
     }
 
     public String getFormattedHand() {
