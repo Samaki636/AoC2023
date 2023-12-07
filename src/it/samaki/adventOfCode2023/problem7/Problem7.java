@@ -21,8 +21,10 @@ public class Problem7 {
             }
         }
         hands.sort(new HandsComparator());
-        for (Hand hand : hands)
-            totalWinnings += (hands.indexOf(hand) + 1)*hand.getBid();
+        for (Hand hand : hands) {
+            System.out.println(hand.getHand());
+            totalWinnings += (hands.indexOf(hand) + 1) * hand.getBid();
+        }
         System.out.println("The total winnings are: " + totalWinnings);
     }
 }

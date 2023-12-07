@@ -53,19 +53,23 @@ public class Hand implements Comparable<Hand> {
             return -1;
         if (type > hand.getType())
             return 1;
-        return compareSameTypeHands(hand.hand);
+        return compareSameTypeHands(hand.getFormattedHand());
     }
 
     private int compareSameTypeHands(String hand) {
         for (int i = 0; i < hand.length(); i++) {
-            if (this.hand.charAt(i) != hand.charAt(i))
-                return Integer.compare(hand.charAt(i), this.hand.charAt(i));
+            if (this.formattedHand.charAt(i) != hand.charAt(i))
+                return Integer.compare(this.formattedHand.charAt(i), hand.charAt(i));
         }
         return 0;
     }
 
     public String getHand() {
         return hand;
+    }
+
+    public String getFormattedHand() {
+        return formattedHand;
     }
 
     public int getBid() {
