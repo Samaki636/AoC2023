@@ -14,10 +14,10 @@ public class Problem9 {
     public static void main (String[] args) throws FileNotFoundException {
         LinkedList<String> input = new LinkedList<>();
 
-        Pattern pattern = Pattern.compile("\\d+");
+        Pattern pattern = Pattern.compile("-?[0-9]+");
         Matcher matcher;
 
-        int sum = 0;
+        long sum = 0;
 
         try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem9/test2.txt"))) {
             while (scanner.hasNext())
@@ -26,14 +26,14 @@ public class Problem9 {
 
         //for each line of input do
         for (String s : input) {
-            LinkedList<LinkedList<Integer>> results = new LinkedList<>();
+            LinkedList<LinkedList<Long>> results = new LinkedList<>();
             matcher = pattern.matcher(s);
-            int lastN;
+            long lastN;
 
             //copy input on results
             results.add(new LinkedList<>());
             while (matcher.find())
-                results.get(0).add(Integer.parseInt(matcher.group()));
+                results.get(0).add(Long.parseLong(matcher.group()));
 
             //create lines of results
             int i = 0;
@@ -48,17 +48,18 @@ public class Problem9 {
             }
 
             //add 0 and compute new values
-            results.getLast().add(0);
+            results.getLast().add(0L);
             for (int j = results.size() - 2; j >= 0; j--)
                 results.get(j).add(results.get(j).getLast() + results.get(j + 1).getLast());
             sum += results.get(0).getLast();
+            System.out.println("The partial sum is: " + sum);
         }
 
         System.out.println("The sum of all the extrapolated values is: " + sum);
     }
 
-    public static boolean checkAll(LinkedList<Integer> list) {
-        for (Integer candidate : list)
+    public static boolean checkAll(LinkedList<Long> list) {
+        for (Long candidate : list)
             if (candidate != 0) return false;
         return true;
     }
