@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class Problem8 {
     public static void main (String[] args) throws FileNotFoundException {
         LinkedList<String> currentPositions = new LinkedList<>();
+        LinkedList<Long> results = new LinkedList<>();
 
         Map<String, String[]> map = new HashMap<>();
 
@@ -22,10 +23,8 @@ public class Problem8 {
 
         boolean isLeft;
 
-        int stepsNumber = 0;
+        long stepsNumber = 0;
         int count = 0;
-
-        long[] results = new long[6];
 
         BigInteger LCM;
 
@@ -40,7 +39,7 @@ public class Problem8 {
             }
         }
 
-        while (count < 6) {
+        while (count < currentPositions.size()) {
             for (int i = 0; i < directions.length(); i++) {
                 isLeft = directions.charAt(i) == 'L';
                 for (String s : currentPositions) {
@@ -50,16 +49,18 @@ public class Problem8 {
                         currentPositions.set(currentPositions.indexOf(s), map.get(s)[1]);
                     if (s.charAt(2) == 'Z') {
                         System.out.println("Are required " + stepsNumber + " steps to reach ZZZ.");
-                        results[count] = stepsNumber;
+                        results.add(stepsNumber);
                         count++;
                     }
-                    stepsNumber++;
                 }
+                stepsNumber++;
+                if (count == currentPositions.size())
+                    break;
             }
         }
-        LCM = BigInteger.valueOf(results[0]);
-        for (int i = 1; i < results.length; i++)
-            LCM = lcm(LCM, results[i]);
+        LCM = BigInteger.valueOf(results.get(0));
+        for (int i = 1; i < results.size(); i++)
+            LCM = lcm(LCM, results.get(i));
         System.out.println("The LCM is: " + LCM);
     }
 
