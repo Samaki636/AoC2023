@@ -14,7 +14,7 @@ public class Problem10 {
         String currentLine = "";
         int stepsToMake = 1;
 
-        try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem10/test3.txt"))) {
+        try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem10/test2.txt"))) {
             while (scanner.hasNextLine()) {
                 input.add(scanner.nextLine());
                 if (input.getLast().contains("S")) {
@@ -26,6 +26,11 @@ public class Problem10 {
         char currentPipe;
         int CPIndex = currentLine.indexOf('S') + 1;
         char lastDirection = 'R';
+
+        boolean[][] visited = new boolean[input.size()][currentLine.length()];
+        for (int i = 0; i < visited.length; i++)
+            for (int j = 0; j < currentLine.length(); j++)
+                visited[i][j] = false;
 
         currentPipe = currentLine.charAt(CPIndex);
         while (currentPipe != 'S') {
@@ -77,9 +82,20 @@ public class Problem10 {
             }
             currentPipe = currentLine.charAt(CPIndex);
             stepsToMake++;
+            visited[input.indexOf(currentLine)][CPIndex] = true;
         }
 
         System.out.println("Does it take " + stepsToMake/2 + " steps to get from the starting position to the point " +
                 "farthest from the starting position.");
+
+        for (boolean[] booleans : visited) {
+            for (int j = 0; j < currentLine.length(); j++) {
+                if (booleans[j])
+                    System.out.print("[X]");
+                else
+                    System.out.print("[ ]");
+            }
+            System.out.println();
+        }
     }
 }
