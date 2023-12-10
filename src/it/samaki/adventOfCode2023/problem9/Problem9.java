@@ -17,7 +17,8 @@ public class Problem9 {
         Pattern pattern = Pattern.compile("-?[0-9]+");
         Matcher matcher;
 
-        long sum = 0;
+        long sum1 = 0;
+        long sum2 = 0;
 
         try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem9/test2.txt"))) {
             while (scanner.hasNext())
@@ -51,11 +52,18 @@ public class Problem9 {
             results.getLast().add(0L);
             for (int j = results.size() - 2; j >= 0; j--)
                 results.get(j).add(results.get(j).getLast() + results.get(j + 1).getLast());
-            sum += results.get(0).getLast();
-            System.out.println("The partial sum is: " + sum);
+            sum1 += results.getFirst().getLast();
+            System.out.println("The partial sum1 is: " + sum1);
+
+            results.getLast().add(0, 0L);
+            for (int j = results.size() - 2; j >= 0; j--)
+                results.get(j).add(0, results.get(j).getFirst() - results.get(j + 1).getFirst());
+            sum2 += results.getFirst().getFirst();
+            System.out.println("The partial sum2 is: " + sum1);
         }
 
-        System.out.println("The sum of all the extrapolated values is: " + sum);
+        System.out.println("The sum of all the extrapolated values is: " + sum1);
+        System.out.println("The sum of all the new extrapolated values is: " + sum2);
     }
 
     public static boolean checkAll(LinkedList<Long> list) {
