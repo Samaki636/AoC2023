@@ -88,7 +88,14 @@ public class Problem10 {
         System.out.println("Does it take " + stepsToMake/2 + " steps to get from the starting position to the point " +
                 "farthest from the starting position.");
 
+        int i = 0;
         for (boolean[] booleans : visited) {
+            i++;
+            if (i < 10)
+                System.out.print("Line: 00" + i);
+            else if (i < 100)
+                System.out.print("Line: 0" + i);
+            else System.out.print("Line: " + i);
             for (int j = 0; j < currentLine.length(); j++) {
                 if (booleans[j])
                     System.out.print("[X]");
@@ -97,5 +104,81 @@ public class Problem10 {
             }
             System.out.println();
         }
+
+        CPIndex = currentLine.indexOf('S') + 1;
+        lastDirection = 'R';
+        int count = 0;
+
+        currentPipe = currentLine.charAt(CPIndex);
+        while (currentPipe != 'S') {
+            switch (currentPipe) {
+                case '-' -> {
+                    if (lastDirection == 'R') CPIndex++;
+                    else CPIndex--;
+                }
+                case '|' -> {
+                    if (lastDirection == 'U') currentLine = input.get(input.indexOf(currentLine) - 1);
+                    else currentLine = input.get(input.indexOf(currentLine) + 1);
+                }
+                case 'L' -> {
+                    if (lastDirection == 'L') {
+                        lastDirection = 'U';
+                        currentLine = input.get(input.indexOf(currentLine) - 1);
+                    } else {
+                        lastDirection = 'R';
+                        CPIndex++;
+                    }
+                }
+                case 'J' -> {
+                    if (lastDirection == 'R') {
+                        lastDirection = 'U';
+                        currentLine = input.get(input.indexOf(currentLine) - 1);
+                    } else {
+                        lastDirection = 'L';
+                        CPIndex--;
+                    }
+                }
+                case '7' -> {
+                    if (lastDirection == 'U') {
+                        lastDirection = 'L';
+                        CPIndex--;
+                    } else {
+                        lastDirection = 'D';
+                        currentLine = input.get(input.indexOf(currentLine) + 1);
+                    }
+                }
+                case 'F' -> {
+                    if (lastDirection == 'U') {
+                        lastDirection = 'R';
+                        CPIndex++;
+                    } else {
+                        lastDirection = 'D';
+                        currentLine = input.get(input.indexOf(currentLine) + 1);
+                    }
+                }
+            }
+            currentPipe = currentLine.charAt(CPIndex);
+            switch (lastDirection) {
+                case 'U' -> {
+                    if (!visited[input.indexOf(currentLine)][CPIndex - 1])
+                        count++;
+                }
+                case 'D' -> {
+                    if (!visited[input.indexOf(currentLine)][CPIndex + 1])
+                        count++;
+                }
+
+                case 'L' -> {
+                    if (!visited[input.indexOf(currentLine) + 1][CPIndex])
+                        count++;
+                }
+
+                case 'R' -> {
+                    if (!visited[input.indexOf(currentLine) - 1][CPIndex])
+                        count++;
+                }
+            }
+        }
+        System.out.println("The number of tiles that are enclosed is: " + count);
     }
 }
