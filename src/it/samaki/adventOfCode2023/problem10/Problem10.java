@@ -82,6 +82,7 @@ public class Problem10 {
                         currentLine = input.get(input.indexOf(currentLine) + 1);
                     }
                 }
+                default -> System.out.println("ERROR");
             }
             currentPipe = currentLine.charAt(CPIndex);
             stepsToMake++;
@@ -109,36 +110,63 @@ public class Problem10 {
         }
 
         int countL7FJ;
+        int count1;
         int nEnclosedTiles = 0;
-        Pattern pattern = Pattern.compile("F[^J7F|]*J");
-        Pattern pattern1 = Pattern.compile("L[^7JL|]*7");
+        Pattern pattern = Pattern.compile("F[^J7LFS|.]*J");
+        Pattern pattern1 = Pattern.compile("[LS][^7JFSL|.]*7");
+        Pattern pattern2 = Pattern.compile("\\|");
         Matcher matcher;
         Matcher matcher1;
-        for (int l = 1; l < visited.length - 1; l++) {
+        Matcher matcher2;
+        for (int l = 1; l < visited.length; l++) {
             boolean[] line = visited[l];
             matcher = pattern.matcher(input.get(l));
             matcher1 = pattern1.matcher(input.get(l));
+            matcher2 = pattern2.matcher(input.get(l));
             for (int j = 0; j < visited[0].length; j++) {
                 if (line[j])
                     continue;
                 countL7FJ = 0;
+                count1 = 0;
                 matcher.reset();
                 matcher1.reset();
+                matcher2.reset();
                 matcher.region(0, j);
                 matcher1.region(0, j);
+                matcher2.region(0, j);
                 while (matcher.find()) {
                     System.out.println(matcher.group());
-                    for (int m = matcher.start(); m < matcher.end(); m++)
-                        if (line[m] && line[m - 1])
-                            countL7FJ++;
+                    boolean valid = false;
+                    for (int m = matcher.start(); m < matcher.end(); m++) {
+                        if (!line[m]) {
+                            valid = false;
+                            break;
+                        } else
+                            valid = true;
+                    }
+                    if (valid)
+                        countL7FJ++;
                 }
                 while (matcher1.find()) {
                     System.out.println(matcher1.group());
-                    for (int m = matcher1.start(); m < matcher1.end(); m++)
-                        if (line[m] && line[m - 1])
-                            countL7FJ++;
+                    boolean valid = false;
+                    for (int m = matcher1.start(); m < matcher1.end(); m++) {
+                        if (!line[m]) {
+                            valid = false;
+                            break;
+                        } else
+                            valid = true;
+                    }
+                    if (valid)
+                        countL7FJ++;
                 }
-                if (countL7FJ %2 != 0)
+
+                while (matcher2.find()) {
+                    if (line[matcher2.start()])
+                        count1++;
+                }
+
+                if ((countL7FJ + count1) %2 != 0)
                     nEnclosedTiles++;
             }
         }
