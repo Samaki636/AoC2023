@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Problem11 {
     public static void main (String[] args) throws FileNotFoundException {
         try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem11/test1.txt"))) {
-
+            
         }
     }
 }
