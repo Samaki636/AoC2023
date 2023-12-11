@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Problem11 {
     public static void main (String[] args) throws FileNotFoundException {
         LinkedList<String> input = new LinkedList<>();
-        try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem11/test1.txt"))) {
+        try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem11/test2.txt"))) {
             while (scanner.hasNext())
                 input.add(scanner.nextLine());
         }
@@ -36,6 +36,30 @@ public class Problem11 {
             }
         }
 
+        //build pairs
+        int distance = 0;
+        int nPair = 0;
+        int m;
+        for (int i = 0; i < input.size(); i++) {
+            for (int j = 0; j < input.get(0).length(); j++) {
+                if (input.get(i).charAt(j) == '#') {
+                    m = j + 1;
+                    for (int k = i; k < input.size(); k++) {
+                        for (int l = m; l < input.get(0).length(); l++) {
+                            if (input.get(k).charAt(l) == '#') {
+                                int sum = Math.abs(k - i) + Math.abs(l - j);
+                                System.out.println("Sum: " + sum);
+                                distance += sum;
+                                nPair++;
+                            }
+                            if (l == input.get(0).length() - 1)
+                                m = 0;
+                        }
+                    }
+                }
+            }
+        }
+
         //test print
         for (String s : input) {
             for (int j = 0; j < input.get(0).length(); j++)
@@ -43,5 +67,7 @@ public class Problem11 {
             System.out.println();
         }
 
+        System.out.println("The sum of the shortest path between all the pairs of galaxies is: " + distance);
+        System.out.println("The number of the pairs is: " + nPair);
     }
 }
