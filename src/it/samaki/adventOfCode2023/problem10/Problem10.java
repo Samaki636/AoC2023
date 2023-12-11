@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author : Samaki01
@@ -33,6 +35,7 @@ public class Problem10 {
                 visited[i][j] = false;
 
         currentPipe = currentLine.charAt(CPIndex);
+        visited[input.indexOf(currentLine)][CPIndex] = true;
         while (currentPipe != 'S') {
             switch (currentPipe) {
                 case '-' -> {
@@ -105,80 +108,40 @@ public class Problem10 {
             System.out.println();
         }
 
-        CPIndex = currentLine.indexOf('S') + 1;
-        lastDirection = 'R';
-        int count = 0;
-
-        currentPipe = currentLine.charAt(CPIndex);
-        while (currentPipe != 'S') {
-            switch (currentPipe) {
-                case '-' -> {
-                    if (lastDirection == 'R') CPIndex++;
-                    else CPIndex--;
+        int countL7FJ;
+        int nEnclosedTiles = 0;
+        Pattern pattern = Pattern.compile("F[^J7F|]*J");
+        Pattern pattern1 = Pattern.compile("L[^7JL|]*7");
+        Matcher matcher;
+        Matcher matcher1;
+        for (int l = 1; l < visited.length - 1; l++) {
+            boolean[] line = visited[l];
+            matcher = pattern.matcher(input.get(l));
+            matcher1 = pattern1.matcher(input.get(l));
+            for (int j = 0; j < visited[0].length; j++) {
+                if (line[j])
+                    continue;
+                countL7FJ = 0;
+                matcher.reset();
+                matcher1.reset();
+                matcher.region(0, j);
+                matcher1.region(0, j);
+                while (matcher.find()) {
+                    System.out.println(matcher.group());
+                    for (int m = matcher.start(); m < matcher.end(); m++)
+                        if (line[m] && line[m - 1])
+                            countL7FJ++;
                 }
-                case '|' -> {
-                    if (lastDirection == 'U') currentLine = input.get(input.indexOf(currentLine) - 1);
-                    else currentLine = input.get(input.indexOf(currentLine) + 1);
+                while (matcher1.find()) {
+                    System.out.println(matcher1.group());
+                    for (int m = matcher1.start(); m < matcher1.end(); m++)
+                        if (line[m] && line[m - 1])
+                            countL7FJ++;
                 }
-                case 'L' -> {
-                    if (lastDirection == 'L') {
-                        lastDirection = 'U';
-                        currentLine = input.get(input.indexOf(currentLine) - 1);
-                    } else {
-                        lastDirection = 'R';
-                        CPIndex++;
-                    }
-                }
-                case 'J' -> {
-                    if (lastDirection == 'R') {
-                        lastDirection = 'U';
-                        currentLine = input.get(input.indexOf(currentLine) - 1);
-                    } else {
-                        lastDirection = 'L';
-                        CPIndex--;
-                    }
-                }
-                case '7' -> {
-                    if (lastDirection == 'U') {
-                        lastDirection = 'L';
-                        CPIndex--;
-                    } else {
-                        lastDirection = 'D';
-                        currentLine = input.get(input.indexOf(currentLine) + 1);
-                    }
-                }
-                case 'F' -> {
-                    if (lastDirection == 'U') {
-                        lastDirection = 'R';
-                        CPIndex++;
-                    } else {
-                        lastDirection = 'D';
-                        currentLine = input.get(input.indexOf(currentLine) + 1);
-                    }
-                }
-            }
-            currentPipe = currentLine.charAt(CPIndex);
-            switch (lastDirection) {
-                case 'U' -> {
-                    if (!visited[input.indexOf(currentLine)][CPIndex - 1])
-                        count++;
-                }
-                case 'D' -> {
-                    if (!visited[input.indexOf(currentLine)][CPIndex + 1])
-                        count++;
-                }
-
-                case 'L' -> {
-                    if (!visited[input.indexOf(currentLine) + 1][CPIndex])
-                        count++;
-                }
-
-                case 'R' -> {
-                    if (!visited[input.indexOf(currentLine) - 1][CPIndex])
-                        count++;
-                }
+                if (countL7FJ %2 != 0)
+                    nEnclosedTiles++;
             }
         }
-        System.out.println("The number of tiles that are enclosed is: " + count);
+        System.out.println("The number of enclosed tiles is: " + nEnclosedTiles);
     }
 }
