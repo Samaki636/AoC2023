@@ -9,7 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem11 part 2" />
+    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Setup problem12 part1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,11 +65,12 @@
     "Application.Problem10.executor": "Run",
     "Application.Problem11 Xml.executor": "Run",
     "Application.Problem11.executor": "Run",
+    "Application.Problem12.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "problem12",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
@@ -300,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702376004137</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Setup problem12 part1">
+      <option name="closed" value="true" />
+      <created>1702376821710</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1702376821710</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -336,7 +350,8 @@
     <MESSAGE value="Complete galaxy expansion" />
     <MESSAGE value="Complete problem11 part 1" />
     <MESSAGE value="Complete problem11 part 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete problem11 part 2" />
+    <MESSAGE value="Setup problem12 part1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Setup problem12 part1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -345,6 +360,11 @@
           <url>file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem5/Problem5tris.java</url>
           <line>172</line>
           <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
