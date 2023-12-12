@@ -36,7 +36,7 @@ public class Problem11 {
             }
         }
 
-        //build pairs
+        //build pairs 92235
         int distance = 0;
         int nPair = 0;
         int m;
@@ -52,9 +52,8 @@ public class Problem11 {
                                 distance += sum;
                                 nPair++;
                             }
-                            if (l == input.get(0).length() - 1)
-                                m = 0;
                         }
+                        m = 0;
                     }
                 }
             }
