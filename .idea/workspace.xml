@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Setup problem12 part1">
+    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem12 test1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -314,7 +313,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702376821710</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Complete problem12 test1">
+      <option name="closed" value="true" />
+      <created>1702415082490</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1702415082490</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -351,7 +358,8 @@
     <MESSAGE value="Complete problem11 part 1" />
     <MESSAGE value="Complete problem11 part 2" />
     <MESSAGE value="Setup problem12 part1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Setup problem12 part1" />
+    <MESSAGE value="Complete problem12 test1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete problem12 test1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -360,11 +368,6 @@
           <url>file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem5/Problem5tris.java</url>
           <line>172</line>
           <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="63" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

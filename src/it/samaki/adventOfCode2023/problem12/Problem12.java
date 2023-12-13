@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  * @author : Samaki01
  **/
 public class Problem12 {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main (String[] args) throws FileNotFoundException {
         LinkedList<String> input = new LinkedList<>();
         LinkedList<String> possibleStrings;
@@ -18,6 +19,19 @@ public class Problem12 {
         try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem12/test1.txt"))) {
             while (scanner.hasNextLine())
                 input.add(scanner.nextLine());
+        }
+
+        //modify input
+        Pattern pattern = Pattern.compile(" ");
+        Matcher matcher;
+        String str1;
+        String str2;
+        for (String s : input) {
+            matcher = pattern.matcher(s);
+            matcher.find();
+            str1 = s.substring(0, matcher.start());
+            str2 = s.substring(matcher.end());
+            input.set(input.indexOf(s), str1+"?"+str1+"?"+str1+"?"+str1+"?"+str1+" "+str2+","+str2+","+str2+","+str2+","+str2);
         }
 
         //build all possible strings
@@ -51,6 +65,8 @@ public class Problem12 {
                 }
             }
 
+            //most expensive method
+            //checks for valid strings
             for (String str : possibleStrings) {
                 matcher1 = pattern1.matcher(str);
                 matcher2 = pattern2.matcher(str);
