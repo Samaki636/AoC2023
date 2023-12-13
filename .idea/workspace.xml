@@ -9,7 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem11 part 2" />
+    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem11 part 2">
+      <change afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem13/test1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem13/test2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="problem11" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -60,11 +65,12 @@
     "Application.Problem10.executor": "Run",
     "Application.Problem11 Xml.executor": "Run",
     "Application.Problem11.executor": "Run",
+    "Application.Problem13.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "problem13",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
@@ -76,6 +82,11 @@
     "settings.editor.selected.configurable": "project.propCompiler"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\andre\IdeaProjects\AoC2023\res\it\samaki\adventOfCode2023\problem13" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
