@@ -10,9 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem12 test1">
+      <change afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12bis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem12/test2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +64,7 @@
     "Application.Problem11 Xml.executor": "Run",
     "Application.Problem11.executor": "Run",
     "Application.Problem12.executor": "Run",
+    "Application.Problem12bis.executor": "Debug",
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -369,6 +369,16 @@
           <line>172</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="sum &lt; 0" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem12/Problem12bis.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StringIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="109" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
