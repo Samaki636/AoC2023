@@ -177,5 +177,3 @@ public class Problem13 {
         return columnsNumber;
     }
 }
-
-//11336 //22536 //26888 //27044 //32044 // 32069
