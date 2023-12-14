@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem13 part1" />
+    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem13 part2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -360,7 +363,9 @@
     <MESSAGE value="Complete problem11 part 2" />
     <MESSAGE value="Complete problem13 test1" />
     <MESSAGE value="Complete problem13 part1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete problem13 part1" />
+    <MESSAGE value="Dead end problem13 part2" />
+    <MESSAGE value="Complete problem13 part2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete problem13 part2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -372,6 +377,11 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java" line="116">
+        <watch expression="l" />
+      </inline-watch>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
