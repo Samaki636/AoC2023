@@ -12,16 +12,20 @@ public class Problem13 {
     public static void main (String[] args) throws FileNotFoundException {
         LinkedList<String> input = new LinkedList<>();
         int sum = 0;
+        int patternNumber = 0;
         try (Scanner scanner = new Scanner(new File("./res/it/samaki/adventOfCode2023/problem13/test2.txt"))) {
             String s;
             while (scanner.hasNextLine()) {
                 if (!(s = scanner.nextLine()).isEmpty()) {
                     input.add(s);
                 } else {
+                    System.out.println("Pattern number: " + patternNumber + "----------------------------------------");
                     int columnsNumber = getColumnsNumber(input);
                     int rowsNumber = getRowsNumber(input);
                     sum += columnsNumber + rowsNumber*100;
+                    System.out.println("Partial sum: " + sum);
                     input = new LinkedList<>();
+                    patternNumber++;
                 }
             }
         }
@@ -30,7 +34,7 @@ public class Problem13 {
 
     private static int getColumnsNumber(LinkedList<String> input) {
         int columnsNumber = 0;
-        for (int i = 1; i < input.get(0).length() - 1; i++) {
+        for (int i = 0; i < input.get(0).length() - 1; i++) {
             int m = 1;
             for (int l = i; l >= 0; l--) {
                 if (l+m > input.get(0).length() - 1) {
@@ -54,8 +58,7 @@ public class Problem13 {
                 }
                 if (l == 0) {
                     columnsNumber += i+1;
-                    System.out.println("RowsNumbers: " + columnsNumber);
-                    i = input.size();
+                    System.out.println("ColumnsNumber: " + columnsNumber);
                 }
             }
         }
@@ -65,13 +68,12 @@ public class Problem13 {
     private static int getRowsNumber(LinkedList<String> input) {
         int rowsNumber = 0;
         int lineLength = input.get(0).length();
-        for (int i = 1; i < input.size()-1; i++) {
+        for (int i = 0; i < input.size()-1; i++) {
             int m = 1;
             for (int l = i; l >= 0; l--) {
                 if (l+m > input.size() - 1) {
                     rowsNumber += i + 1;
                     System.out.println("RowsNumbers: " + rowsNumber);
-                    i = input.size();
                     break;
                 }
                 String currentLine = input.get(l);
@@ -86,7 +88,6 @@ public class Problem13 {
                 if (l == 0) {
                     rowsNumber += i+1;
                     System.out.println("RowsNumbers: " + rowsNumber);
-                    i = input.size();
                 }
             }
         }

@@ -9,11 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem11 part 2">
-      <change afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem13/test1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/it/samaki/adventOfCode2023/problem13/test2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java" afterDir="false" />
+    <list default="true" id="e2211536-1be2-4430-8c2a-ed81c3b826e6" name="Changes" comment="Complete problem13 test1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,7 +309,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702376004137</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Complete problem13 test1">
+      <option name="closed" value="true" />
+      <created>1702505671488</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1702505671488</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -347,7 +353,8 @@
     <MESSAGE value="Complete galaxy expansion" />
     <MESSAGE value="Complete problem11 part 1" />
     <MESSAGE value="Complete problem11 part 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete problem11 part 2" />
+    <MESSAGE value="Complete problem13 test1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete problem13 test1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -356,6 +363,11 @@
           <url>file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem5/Problem5tris.java</url>
           <line>172</line>
           <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/it/samaki/adventOfCode2023/problem13/Problem13.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
