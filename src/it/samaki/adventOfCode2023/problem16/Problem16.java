@@ -2,6 +2,8 @@ package it.samaki.adventOfCode2023.problem16;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -11,7 +13,7 @@ import java.util.Scanner;
 public class Problem16 {
     public static void main(String[] args) throws FileNotFoundException {
         LinkedList<String> input = new LinkedList<>();
-        try (Scanner scanner = new Scanner(new File("res/it/samaki/adventOfCode2023/problem16/test1.txt"))) {
+        try (Scanner scanner = new Scanner(new File("res/it/samaki/adventOfCode2023/problem16/test2.txt"))) {
             while (scanner.hasNextLine())
                 input.add(scanner.nextLine());
         }
@@ -22,7 +24,9 @@ public class Problem16 {
         int y = 0;
         int energizedTiles = 0;
 
-        energized = computeBeam(dir, x, y, input, energized);
+        HashMap<String, boolean[][]> cache = new HashMap<>();
+
+        energized = computeBeam(dir, x, y, input, energized, cache);
         energized[0][0] = true;
 
         for (boolean[] booleans : energized) {
@@ -39,9 +43,13 @@ public class Problem16 {
     }
 
     //Problem: termitation condition is passing 3 energized tiles while cycling, for now it works, check timer
-    private static boolean[][] computeBeam(char dir, int x, int y, LinkedList<String> input, boolean[][] energized) {
+    private static boolean[][] computeBeam
+    (char dir, int x, int y, LinkedList<String> input, boolean[][] energized, HashMap<String, boolean[][]> cache) {
+        String hash = Arrays.deepToString(energized);
+        if (cache.containsKey(hash))
+            return energized;
         boolean firstRun = true;
-        int timer = 3;
+        int timer = 11;
         while (timer != 0) {
             if (energized[y][x])
                 timer--;
@@ -59,7 +67,7 @@ public class Problem16 {
                         case '/' -> dir = 'U';
                         case '\\' -> dir = 'D';
                         case '|' -> {
-                            energized = computeBeam('U', x, y, input, energized);
+                            energized = computeBeam('U', x, y, input, energized, cache);
                             dir = 'D';
                         }
                     }
@@ -72,7 +80,7 @@ public class Problem16 {
                         case '/' -> dir = 'D';
                         case '\\' -> dir = 'U';
                         case '|' -> {
-                            energized = computeBeam('U', x, y, input, energized);
+                            energized = computeBeam('U', x, y, input, energized, cache);
                             dir = 'D';
                         }
                     }
@@ -85,7 +93,7 @@ public class Problem16 {
                         case '/' -> dir = 'R';
                         case '\\' -> dir = 'L';
                         case '-' -> {
-                            energized = computeBeam('R', x, y, input, energized);
+                            energized = computeBeam('R', x, y, input, energized, cache);
                             dir = 'L';
                         }
                     }
@@ -98,7 +106,7 @@ public class Problem16 {
                         case '/' -> dir = 'L';
                         case '\\' -> dir = 'R';
                         case '-' -> {
-                            energized = computeBeam('R', x, y, input, energized);
+                            energized = computeBeam('R', x, y, input, energized, cache);
                             dir = 'L';
                         }
                     }
@@ -106,6 +114,9 @@ public class Problem16 {
                 default -> System.out.println("Error.");
             }
         }
+        cache.put(hash, energized);
         return energized;
     }
 }
+//2322 timer 3; stackOverflow timer 10; 3424 timer 5; 4157 timer 7; stackOverflow timer 8;
+//4566 cache timer 8; 5023 timer 10; 5258 cache timer 11
