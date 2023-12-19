@@ -2,10 +2,9 @@ package it.samaki.adventOfCode2023.problem16;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * @author : Samaki01
@@ -18,56 +17,57 @@ public class Problem16 {
                 input.add(scanner.nextLine());
         }
 
-        boolean[][] energized = new boolean[input.size()][input.get(0).length()];
-        char dir = 'R';
-        int x = -1;
-        int y = 0;
-        int energizedTiles = 0;
+        int maxEnergizedTiles = 0;
+        for (int i = 0; i < input.size(); i++) {
+            boolean[][] energized = new boolean[input.size()][input.get(0).length()];
+            int energizedTiles = 0;
+            Stack<String> toDoList = new Stack<>();
+            LinkedList<String> visited = new LinkedList<>();
 
-        HashMap<String, boolean[][]> cache = new HashMap<>();
+            energized = computeBeam('U', i, input.size(), input, energized, toDoList, visited);
 
-        energized = computeBeam(dir, x, y, input, energized, cache);
-        energized[0][0] = true;
-
-        for (boolean[] booleans : energized) {
-            for (int j = 0; j < energized[0].length; j++) {
-                if (booleans[j]) {
-                    energizedTiles++;
-                    System.out.print("[X]");
-                } else System.out.print("[ ]");
+            //compute energized tiles number
+            for (boolean[] booleans : energized) {
+                for (int j = 0; j < energized[0].length; j++) {
+                    if (booleans[j]) {
+                        energizedTiles++;
+                        System.out.print("[X]");
+                    } else {
+                        System.out.print("[ ]");
+                    }
+                }
+                System.out.println();
             }
             System.out.println();
+            if (maxEnergizedTiles < energizedTiles)
+                maxEnergizedTiles = energizedTiles;
         }
 
-        System.out.println(energizedTiles + " tiles end up being energized.");
+        System.out.println(maxEnergizedTiles + " tiles end up being energized at max.");
     }
 
-    //Problem: termitation condition is passing 3 energized tiles while cycling, for now it works, check timer
+    //Problem: termitation condition is passing n energized tiles while cycling, for now it works, check timer
     private static boolean[][] computeBeam
-    (char dir, int x, int y, LinkedList<String> input, boolean[][] energized, HashMap<String, boolean[][]> cache) {
-        String hash = Arrays.deepToString(energized);
-        if (cache.containsKey(hash))
-            return energized;
-        boolean firstRun = true;
-        int timer = 8;
-        while (timer != 0) {
-            if (firstRun) {
-                firstRun = false;
-            } else {
-                if (energized[y][x])
-                    timer--;
+    (char dir, int x, int y, LinkedList<String> input, boolean[][] energized, Stack<String> toDoList, LinkedList<String> visited) {
+        String hash = dir+","+x+","+y;
+        boolean firstLoop = true;
+        while (!(dir+","+x+","+y).equals(hash) || firstLoop) {
+            if (firstLoop) firstLoop = false;
+            if (y < input.size())
                 energized[y][x] = true;
-            }
             switch (dir) {
                 case 'R' -> {
                     x++;
                     if (x >= input.get(y).length())
-                        return energized;
+                        break;
                     switch (input.get(y).charAt(x)) {
                         case '/' -> dir = 'U';
                         case '\\' -> dir = 'D';
                         case '|' -> {
-                            energized = computeBeam('U', x, y, input, energized, cache);
+                            if (!visited.contains('U'+","+x+","+y)) {
+                                visited.add('U'+","+x+","+y);
+                                toDoList.push('U'+","+x+","+y);
+                            }
                             dir = 'D';
                         }
                     }
@@ -75,12 +75,15 @@ public class Problem16 {
                 case 'L' -> {
                     x--;
                     if (x < 0)
-                        return energized;
+                        break;
                     switch (input.get(y).charAt(x)) {
                         case '/' -> dir = 'D';
                         case '\\' -> dir = 'U';
                         case '|' -> {
-                            energized = computeBeam('U', x, y, input, energized, cache);
+                            if (!visited.contains('U'+","+x+","+y)) {
+                                visited.add('U'+","+x+","+y);
+                                toDoList.push('U'+","+x+","+y);
+                            }
                             dir = 'D';
                         }
                     }
@@ -88,12 +91,15 @@ public class Problem16 {
                 case 'U' -> {
                     y--;
                     if (y < 0)
-                        return energized;
+                        break;
                     switch (input.get(y).charAt(x)) {
                         case '/' -> dir = 'R';
                         case '\\' -> dir = 'L';
                         case '-' -> {
-                            energized = computeBeam('R', x, y, input, energized, cache);
+                            if (!visited.contains('R'+","+x+","+y)) {
+                                visited.add('R'+","+x+","+y);
+                                toDoList.push('R' + "," + x + "," + y);
+                            }
                             dir = 'L';
                         }
                     }
@@ -101,20 +107,32 @@ public class Problem16 {
                 case 'D' -> {
                     y++;
                     if (y >= input.size())
-                        return energized;
+                        break;
                     switch (input.get(y).charAt(x)) {
                         case '/' -> dir = 'L';
                         case '\\' -> dir = 'R';
                         case '-' -> {
-                            energized = computeBeam('R', x, y, input, energized, cache);
+                            if (!visited.contains('R'+","+x+","+y)) {
+                                visited.add('R'+","+x+","+y);
+                                toDoList.push('R'+","+x+","+y);
+                            }
                             dir = 'L';
                         }
                     }
                 }
                 default -> System.out.println("Error.");
             }
+
+            if (x < 0 || y < 0 || y >= input.size() || x >= input.get(y).length())
+                break;
         }
-        cache.put(hash, energized);
+
+        while (!toDoList.isEmpty()) {
+            String s = toDoList.pop();
+            String[] tmp = s.split(",");
+            energized = computeBeam(tmp[0].charAt(0), Integer.parseInt(tmp[1]), Integer.parseInt(tmp[2]), input, energized, toDoList, visited);
+        }
+
         return energized;
     }
 }
@@ -122,3 +140,5 @@ public class Problem16 {
 //4566 cache timer 8; 5023 timer 10; 5258 cache timer 11
 //input was wrong.
 // 4442 cache timer 8 too low;
+
+//D 8136 low D 8148?; U 8058; R 8136; L 8047
