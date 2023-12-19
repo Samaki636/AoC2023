@@ -20,7 +20,7 @@ public class Problem16 {
 
         boolean[][] energized = new boolean[input.size()][input.get(0).length()];
         char dir = 'R';
-        int x = 0;
+        int x = -1;
         int y = 0;
         int energizedTiles = 0;
 
@@ -49,13 +49,13 @@ public class Problem16 {
         if (cache.containsKey(hash))
             return energized;
         boolean firstRun = true;
-        int timer = 11;
+        int timer = 8;
         while (timer != 0) {
-            if (energized[y][x])
-                timer--;
             if (firstRun) {
                 firstRun = false;
             } else {
+                if (energized[y][x])
+                    timer--;
                 energized[y][x] = true;
             }
             switch (dir) {
@@ -120,3 +120,5 @@ public class Problem16 {
 }
 //2322 timer 3; stackOverflow timer 10; 3424 timer 5; 4157 timer 7; stackOverflow timer 8;
 //4566 cache timer 8; 5023 timer 10; 5258 cache timer 11
+//input was wrong.
+// 4442 cache timer 8 too low;
