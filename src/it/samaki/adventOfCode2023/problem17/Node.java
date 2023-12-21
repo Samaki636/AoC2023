@@ -10,32 +10,49 @@ import java.util.Map;
  **/
 public class Node {
     private final int value;
-    private Integer distance = Integer.MAX_VALUE;
+    private Integer distanceFromSource = Integer.MAX_VALUE;
     private List<Node> shortestPath = new LinkedList<>();
-    Map<Node,Integer> adjacentNodes = new HashMap<>();
+    private Map<Node,Integer> adjacentNodes = new HashMap<>();
+    private int row;
+    private int column;
 
-    public Node(int value) {
+    public Node(int value, int row, int column) {
         this.value = value;
+        this.row = row;
+        this.column = column;
+        shortestPath.add(this);
     }
 
     public  void addDestination(Node destination, int distance) {
         adjacentNodes.put(destination, distance);
     }
 
-    public Integer getDistance() {
-        return distance;
+    public Integer getDistanceFromSource() {
+        return distanceFromSource;
     }
 
     public Map<Node, Integer> getAdjacentNodes() {
         return adjacentNodes;
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
     public List<Node> getShortestPath() {
         return shortestPath;
     }
 
-    public void setDistance(Integer distance) {
-        this.distance = distance;
+    public void setDistanceFromSource(Integer distanceFromSource) {
+        this.distanceFromSource = distanceFromSource;
     }
 
     public void setShortestPath(List<Node> shortestPath) {

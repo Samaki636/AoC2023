@@ -19,16 +19,45 @@ public class Problem17 {
         Node[][] map = new Node[input.size()][input.get(0).length()];
         for (int i = 0; i < input.size(); i++)
             for (int j = 0; j < input.get(0).length(); j++)
-                map[i][j] = new Node(Integer.parseInt(input.get(i).substring(j, j+1)));
+                map[i][j] = new Node(Integer.parseInt(input.get(i).substring(j, j+1)), i, j);
 
-        for (int i = 0; i < input.size(); i++) {
-            //TODO https://www.baeldung.com/java-dijkstra
-        }
         Graph graph = new Graph();
+        for (int i = 0; i < input.size(); i++) {
+            for (int j = 0; j < input.get(0).length(); j++) {
+                if (i < input.size()-1)
+                    map[i][j].addDestination(map[i+1][j], map[i+1][j].getValue());
+                if (i > 0)
+                    map[i][j].addDestination(map[i-1][j], map[i-1][j].getValue());
+                if (j < input.get(0).length()-1)
+                    map[i][j].addDestination(map[i][j+1], map[i][j+1].getValue());
+                graph.addNode(map[i][j]);
+            }
+        }
+
+        calculateShortestPathFromSource(map[0][0], map);
+
+        int sum = 0;
+        for (Node n : graph.getNodes().getLast().getShortestPath()) {
+            sum += n.getValue();
+        }
+
+        final String ANSI_RED = "\u001B[31m";
+        final String ANSI_RESET = "\u001B[0m";
+        for (int i = 0; i < input.size(); i++) {
+            for (int j = 0; j < input.get(0).length();j++) {
+                if (graph.getNodes().getLast().getShortestPath().contains(map[i][j]))
+                    System.out.print("[" + ANSI_RED + map[i][j].getValue() + ANSI_RESET + "]");
+                else
+                    System.out.print("[" + map[i][j].getValue() + "]");
+            }
+            System.out.println();
+        }
+
+        System.out.println("The least heat loss the crucible can incur is: " + sum);
     }
 
-    public static Graph calculateShortestPathFromSource(Graph graph, Node source) {
-        source.setDistance(0);
+    public static void calculateShortestPathFromSource(Node source, Node[][] map) {
+        source.setDistanceFromSource(0);
 
         Set<Node> settledNodes = new HashSet<>();
         Set<Node> unsettledNodes = new HashSet<>();
@@ -36,8 +65,26 @@ public class Problem17 {
         unsettledNodes.add(source);
 
         while (!unsettledNodes.isEmpty()) {
-            Node currentNode = getLowestDistanceNode(unsettledNodes);
+            Node currentNode = getLowestDistanceFromSourceNode(unsettledNodes);
             unsettledNodes.remove(currentNode);
+
+            LinkedList<Node> shortestPath = new LinkedList<>(currentNode.getShortestPath());
+            if (shortestPath.size() > 3) {
+                Node last = shortestPath.get(shortestPath.size() - 1);
+                Node secondToLast = shortestPath.get(shortestPath.size() - 2);
+                Node thirdToLast = shortestPath.get(shortestPath.size() - 3);
+                Node fourthToLast = shortestPath.get(shortestPath.size() - 4);
+                boolean isMovingStraightTooLongRows = last.getRow() == secondToLast.getRow()
+                        && last.getRow() == thirdToLast.getRow() && last.getRow() == fourthToLast.getRow();
+                boolean isMovingStraightTooLongColumns = last.getColumn() == secondToLast.getColumn()
+                        && last.getColumn() == thirdToLast.getColumn() && last.getColumn() == fourthToLast.getColumn();
+                if (isMovingStraightTooLongRows && currentNode.getColumn() < map[0].length - 1
+                        && currentNode.getColumn() > 3)
+                    currentNode.getAdjacentNodes().remove(map[currentNode.getRow()][currentNode.getColumn() + 1]);
+                if (isMovingStraightTooLongColumns && currentNode.getRow() < map.length - 1)
+                    currentNode.getAdjacentNodes().remove(map[currentNode.getRow() + 1][currentNode.getColumn()]);
+            }
+
             for (Entry<Node, Integer> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {
                 Node adjacentNode = adjacencyPair.getKey();
                 Integer edgeWeight = adjacencyPair.getValue();
@@ -48,28 +95,29 @@ public class Problem17 {
             }
             settledNodes.add(currentNode);
         }
-        return graph;
     }
 
-    private static Node getLowestDistanceNode(Set<Node> unsettledNodes) {
-        Node lowestDistanceNode = null;
-        int lowestDistance = Integer.MAX_VALUE;
+    //return the nearest node from source in the Set, the Set indicate the adjacency list of the current node
+    private static Node getLowestDistanceFromSourceNode(Set<Node> unsettledNodes) {
+        Node lowestDistanceFromSourceNode = null;
+        int lowestDistanceFromSource = Integer.MAX_VALUE;
         for (Node node : unsettledNodes) {
-            int nodeDistance = node.getDistance();
-            if (nodeDistance < lowestDistance) {
-                lowestDistance = nodeDistance;
-                lowestDistanceNode = node;
+            int nodeDistance = node.getDistanceFromSource();
+            if (nodeDistance < lowestDistanceFromSource) {
+                lowestDistanceFromSource = nodeDistance;
+                lowestDistanceFromSourceNode = node;
             }
         }
-        return lowestDistanceNode;
+        return lowestDistanceFromSourceNode;
     }
 
+    //if distance of current node from source + edge weight is < of distance of adjacent node from source
     private static void calculateMinimumDistance(Node evaluationNode, Integer edgeWeight, Node sourceNode) {
-        Integer sourceDistance = sourceNode.getDistance();
-        if (sourceDistance + edgeWeight < evaluationNode.getDistance()) {
-            evaluationNode.setDistance(sourceDistance + edgeWeight);
+        Integer sourceDistance = sourceNode.getDistanceFromSource();
+        if (sourceDistance + edgeWeight <= evaluationNode.getDistanceFromSource()) {
+            evaluationNode.setDistanceFromSource(sourceDistance + edgeWeight);
             LinkedList<Node> shortestPath = new LinkedList<>(sourceNode.getShortestPath());
-            shortestPath.add(sourceNode);
+            shortestPath.add(evaluationNode);
             evaluationNode.setShortestPath(shortestPath);
         }
     }
