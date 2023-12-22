@@ -71,59 +71,73 @@ public class Problem17bis {
         unsettledNodes.add(source);
 
         while (!unsettledNodes.isEmpty()) {
-            Node currentNode = getLowestDistanceNode(unsettledNodes);
-            unsettledNodes.remove(currentNode);
+            Stack<Node> lowestDistanceNodes = getLowestDistanceNodes(unsettledNodes);
+            while (!lowestDistanceNodes.isEmpty()) {
+                Node currentNode = lowestDistanceNodes.pop();
 
-            LinkedList<Node> shortestPath = new LinkedList<>(currentNode.getShortestPath());
-            Node lastNode;
-            Node secondToLastNode;
-            Node thirdToLastNode;
-            boolean isRowTooLong;
-            boolean isColumnTooLong;
-            if (shortestPath.size() > 3) {
-                lastNode = shortestPath.get(shortestPath.size()-1);
-                secondToLastNode = shortestPath.get(shortestPath.size()-2);
-                thirdToLastNode = shortestPath.get(shortestPath.size()-3);
-                isRowTooLong = currentNode.getRow() == lastNode.getRow() && currentNode.getRow() == secondToLastNode.getRow() && currentNode.getRow() == thirdToLastNode.getRow();
-                isColumnTooLong = currentNode.getColumn() == lastNode.getColumn() && currentNode.getColumn() == secondToLastNode.getColumn() && currentNode.getColumn() == thirdToLastNode.getColumn();
+                unsettledNodes.remove(currentNode);
 
-                if (isRowTooLong && currentNode.getColumn() < map[0].length-1)
-                    currentNode.getAdjacentNodes().remove(map[currentNode.getRow()][currentNode.getColumn()+1]);
-                if (isColumnTooLong && currentNode.getRow() < map.length-1)
-                    currentNode.getAdjacentNodes().remove(map[currentNode.getRow()+1][currentNode.getColumn()]);
-            }
+                LinkedList<Node> shortestPath = new LinkedList<>(currentNode.getShortestPath());
+                Node lastNode;
+                Node secondToLastNode;
+                Node thirdToLastNode;
+                boolean isRowTooLong;
+                boolean isColumnTooLong;
+                if (shortestPath.size() > 3) {
+                    lastNode = shortestPath.get(shortestPath.size() - 1);
+                    secondToLastNode = shortestPath.get(shortestPath.size() - 2);
+                    thirdToLastNode = shortestPath.get(shortestPath.size() - 3);
+                    isRowTooLong = currentNode.getRow() == lastNode.getRow() && currentNode.getRow() == secondToLastNode.getRow() && currentNode.getRow() == thirdToLastNode.getRow();
+                    isColumnTooLong = currentNode.getColumn() == lastNode.getColumn() && currentNode.getColumn() == secondToLastNode.getColumn() && currentNode.getColumn() == thirdToLastNode.getColumn();
 
-            for (Node adjacentNode: currentNode.getAdjacentNodes()) {
-                int edgeWeight = adjacentNode.getValue();
-                if (!settledNodes.contains(adjacentNode)) {
-                    calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
-                    unsettledNodes.add(adjacentNode);
+                    if (isRowTooLong && currentNode.getColumn() < map[0].length - 1)
+                        currentNode.getAdjacentNodes().remove(map[currentNode.getRow()][currentNode.getColumn() + 1]);
+                    if (isColumnTooLong && currentNode.getRow() < map.length - 1)
+                        currentNode.getAdjacentNodes().remove(map[currentNode.getRow() + 1][currentNode.getColumn()]);
                 }
+
+                for (Node adjacentNode : currentNode.getAdjacentNodes()) {
+                    int edgeWeight = adjacentNode.getValue();
+                    if (!settledNodes.contains(adjacentNode)) {
+                        calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
+                        unsettledNodes.add(adjacentNode);
+                    }
+                }
+                settledNodes.add(currentNode);
             }
-            settledNodes.add(currentNode);
         }
     }
 
-    public static Node getLowestDistanceNode(Set<Node> unsettledNodes) {
-        Node lowestDistanceNode = null;
+    public static Stack<Node> getLowestDistanceNodes(Set<Node> unsettledNodes) {
         int lowestDistance = Integer.MAX_VALUE;
         for (Node node: unsettledNodes) {
             int nodeDistance = node.getDistanceFromSource();
             if (nodeDistance < lowestDistance) {
                 lowestDistance = nodeDistance;
-                lowestDistanceNode = node;
             }
         }
-        return lowestDistanceNode;
+
+        Stack<Node> lowestDistanceNodes = new Stack<>();
+        for (Node node: unsettledNodes) {
+            int nodeDistance = node.getDistanceFromSource();
+            if (nodeDistance == lowestDistance) {
+                lowestDistanceNodes.add(node);
+            }
+        }
+        return lowestDistanceNodes;
     }
 
     public static void calculateMinimumDistance(Node evaluationNode, int edgeWeight, Node sourceNode) {
         int sourceDistance = sourceNode.getDistanceFromSource();
         if (sourceDistance + edgeWeight < evaluationNode.getDistanceFromSource()) {
             evaluationNode.setDistanceFromSource(sourceDistance + edgeWeight);
-            LinkedList<Node> shortestPath = new LinkedList<>(sourceNode.getShortestPath());
+            List<Node> shortestPath = new LinkedList<>(sourceNode.getShortestPath());
             shortestPath.add(evaluationNode);
             evaluationNode.setShortestPath(shortestPath);
+        }
+
+        if (sourceDistance + edgeWeight == evaluationNode.getDistanceFromSource()) {
+            evaluationNode.addShortestPath(new LinkedList<>(sourceNode.getShortestPath()));
         }
     }
 }

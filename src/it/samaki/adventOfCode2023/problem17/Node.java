@@ -11,6 +11,7 @@ public class Node {
     private Integer distanceFromSource = Integer.MAX_VALUE;
     private List<Node> shortestPath = new LinkedList<>();
     private final List<Node> adjacentNodes = new LinkedList<>();
+    private final List<List<Node>> shortestPaths = new LinkedList<>();
     private final int row;
     private final int column;
 
@@ -21,8 +22,12 @@ public class Node {
         shortestPath.add(this);
     }
 
-    public  void addDestination(Node destination) {
+    public void addDestination(Node destination) {
         adjacentNodes.add(destination);
+    }
+
+    public void addShortestPath(LinkedList<Node> shortestPath) {
+        shortestPaths.add(shortestPath);
     }
 
     public Integer getDistanceFromSource() {
@@ -47,6 +52,10 @@ public class Node {
 
     public List<Node> getShortestPath() {
         return shortestPath;
+    }
+
+    public List<List<Node>> getShortestPaths() {
+        return shortestPaths;
     }
 
     public void setDistanceFromSource(Integer distanceFromSource) {
