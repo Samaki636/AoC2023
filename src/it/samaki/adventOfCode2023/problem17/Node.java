@@ -21,7 +21,7 @@ public class Node {
         shortestPath.add(this);
     }
 
-    public  void addDestination(Node destination, int distance) {
+    public  void addDestination(Node destination) {
         adjacentNodes.add(destination);
     }
 

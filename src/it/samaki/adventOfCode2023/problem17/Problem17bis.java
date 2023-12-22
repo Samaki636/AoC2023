@@ -30,11 +30,11 @@ public class Problem17bis {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 if (i < map.length-1)
-                    map[i][j].addDestination(map[i+1][j], map[i+1][j].getValue());
+                    map[i][j].addDestination(map[i+1][j]);
                 if (i > 0)
-                    map[i][j].addDestination(map[i-1][j], map[i-1][j].getValue());
+                    map[i][j].addDestination(map[i-1][j]);
                 if (j < map[0].length-1)
-                    map[i][j].addDestination(map[i][j+1], map[i][j+1].getValue());
+                    map[i][j].addDestination(map[i][j+1]);
             }
         }
 
