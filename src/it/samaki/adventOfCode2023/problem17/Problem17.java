@@ -78,22 +78,21 @@ public class Problem17 {
                         && last.getRow() == thirdToLast.getRow() && last.getRow() == fourthToLast.getRow();
                 boolean isMovingStraightTooLongColumns = last.getColumn() == secondToLast.getColumn()
                         && last.getColumn() == thirdToLast.getColumn() && last.getColumn() == fourthToLast.getColumn();
-                if (isMovingStraightTooLongRows && currentNode.getColumn() < map[0].length - 1
-                        && currentNode.getColumn() > 3)
+                if (isMovingStraightTooLongRows && currentNode.getColumn() < map[0].length - 1)
                     currentNode.getAdjacentNodes().remove(map[currentNode.getRow()][currentNode.getColumn() + 1]);
                 if (isMovingStraightTooLongColumns && currentNode.getRow() < map.length - 1)
                     currentNode.getAdjacentNodes().remove(map[currentNode.getRow() + 1][currentNode.getColumn()]);
             }
 
-            for (Entry<Node, Integer> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {
-                Node adjacentNode = adjacencyPair.getKey();
-                Integer edgeWeight = adjacencyPair.getValue();
-                if (!settledNodes.contains(adjacentNode)) {
-                    calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
-                    unsettledNodes.add(adjacentNode);
-                }
-            }
-            settledNodes.add(currentNode);
+//            for (Entry<Node, Integer> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {
+//                Node adjacentNode = adjacencyPair.getKey();
+//                Integer edgeWeight = adjacencyPair.getValue();
+//                if (!settledNodes.contains(adjacentNode)) {
+//                    calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
+//                    unsettledNodes.add(adjacentNode);
+//                }
+//            }
+//            settledNodes.add(currentNode);
         }
     }
 

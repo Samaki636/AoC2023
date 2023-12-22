@@ -6,7 +6,7 @@ import java.util.LinkedList;
  * @author : Samaki01
  **/
 public class Graph {
-    private LinkedList<Node> nodes = new LinkedList<>();
+    private final LinkedList<Node> nodes = new LinkedList<>();
 
     public void addNode(Node node) {
         nodes.add(node);

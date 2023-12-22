@@ -1,9 +1,7 @@
 package it.samaki.adventOfCode2023.problem17;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author : Samaki01
@@ -12,9 +10,9 @@ public class Node {
     private final int value;
     private Integer distanceFromSource = Integer.MAX_VALUE;
     private List<Node> shortestPath = new LinkedList<>();
-    private Map<Node,Integer> adjacentNodes = new HashMap<>();
-    private int row;
-    private int column;
+    private final List<Node> adjacentNodes = new LinkedList<>();
+    private final int row;
+    private final int column;
 
     public Node(int value, int row, int column) {
         this.value = value;
@@ -24,14 +22,14 @@ public class Node {
     }
 
     public  void addDestination(Node destination, int distance) {
-        adjacentNodes.put(destination, distance);
+        adjacentNodes.add(destination);
     }
 
     public Integer getDistanceFromSource() {
         return distanceFromSource;
     }
 
-    public Map<Node, Integer> getAdjacentNodes() {
+    public List<Node> getAdjacentNodes() {
         return adjacentNodes;
     }
 
