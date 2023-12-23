@@ -6,9 +6,9 @@ import java.util.List;
 /**
  * @author : Samaki01
  **/
-public class Node {
+public class Node implements Comparable<Node> {
     private final int value;
-    private Integer distanceFromSource = Integer.MAX_VALUE;
+    private int priority = Integer.MAX_VALUE;
     private List<Node> shortestPath = new LinkedList<>();
     private final List<Node> adjacentNodes = new LinkedList<>();
     private final int row;
@@ -21,12 +21,17 @@ public class Node {
         shortestPath.add(this);
     }
 
+    @Override
+    public int compareTo(Node node) {
+        return Integer.compare(node.getPriority(), priority);
+    }
+
     public  void addDestination(Node destination) {
         adjacentNodes.add(destination);
     }
 
     public Integer getDistanceFromSource() {
-        return distanceFromSource;
+        return priority;
     }
 
     public List<Node> getAdjacentNodes() {
@@ -45,12 +50,20 @@ public class Node {
         return column;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
     public List<Node> getShortestPath() {
         return shortestPath;
     }
 
-    public void setDistanceFromSource(Integer distanceFromSource) {
-        this.distanceFromSource = distanceFromSource;
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setDistanceFromSource(int priority) {
+        this.priority = priority;
     }
 
     public void setShortestPath(List<Node> shortestPath) {
