@@ -7,31 +7,26 @@ import java.util.List;
  * @author : Samaki01
  **/
 public class Node implements Comparable<Node> {
+    public static final int NORTH = 0;
+    public static final int EAST = 1;
+    public static final int SOUTH = 2;
+    public static final int WEST = 3;
+
     private final int value;
     private int priority = Integer.MAX_VALUE;
-    private List<Node> shortestPath = new LinkedList<>();
     private final List<Node> adjacentNodes = new LinkedList<>();
     private final int row;
     private final int column;
 
-    public Node(int value, int row, int column) {
+    public Node(int value, int row, int column, int stepsStraight, int direction) {
         this.value = value;
         this.row = row;
         this.column = column;
-        shortestPath.add(this);
     }
 
     @Override
     public int compareTo(Node node) {
         return Integer.compare(node.getPriority(), priority);
-    }
-
-    public  void addDestination(Node destination) {
-        adjacentNodes.add(destination);
-    }
-
-    public Integer getDistanceFromSource() {
-        return priority;
     }
 
     public List<Node> getAdjacentNodes() {
@@ -54,19 +49,7 @@ public class Node implements Comparable<Node> {
         return priority;
     }
 
-    public List<Node> getShortestPath() {
-        return shortestPath;
-    }
-
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    public void setDistanceFromSource(int priority) {
-        this.priority = priority;
-    }
-
-    public void setShortestPath(List<Node> shortestPath) {
-        this.shortestPath = shortestPath;
     }
 }
