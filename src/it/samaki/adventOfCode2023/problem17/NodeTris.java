@@ -6,37 +6,42 @@ import java.util.Set;
 /**
  * @author : Samaki01
  **/
-public class NodeTris implements Comparable<NodeTris> {
+public record NodeTris(NodeBis node, int heatLoss) implements Comparable<NodeTris> {
     public static final int NORTH = 0;
     public static final int EAST = 1;
     public static final int SOUTH = 2;
     public static final int WEST = 3;
 
-    private final int x;
-    private final int y;
-    private final int direction;
-    private final int steps;
-    private final int heatLoss;
-
-    public NodeTris(int x, int y, int direction, int steps, int heatLoss) {
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-        this.steps = steps;
-        this.heatLoss = heatLoss;
-    }
-
-    public Set<NodeTris> getNeighbors(int[][] grid) {
+    public Set<NodeTris> getNeighboursForPart2(int[][] grid) {
         Set<NodeTris> neighbours = new HashSet<>();
 
-        NodeTris left = getNextNode(Math.floorMod(direction-1, 4), grid, 1);
+        if (node.steps() > 3) {
+            NodeTris left = getNextNode(Math.floorMod(node.direction() - 1, 4), grid, 1);
+            if (left != null) neighbours.add(left);
+
+            NodeTris right = getNextNode((node.direction() + 1) % 4, grid, 1);
+            if (right != null) neighbours.add(right);
+        }
+
+        if (node.steps() < 10) {
+            NodeTris straight = getNextNode(node.direction(), grid, node.steps() + 1);
+            if (straight != null) neighbours.add(straight);
+        }
+
+        return neighbours;
+    }
+
+    public Set<NodeTris> getNeighbours(int[][] grid) {
+        Set<NodeTris> neighbours = new HashSet<>();
+
+        NodeTris left = getNextNode(Math.floorMod(node.direction() - 1, 4), grid, 1);
         if (left != null) neighbours.add(left);
 
-        NodeTris right = getNextNode((direction+1) % 4, grid, 1);
+        NodeTris right = getNextNode((node.direction() + 1) % 4, grid, 1);
         if (right != null) neighbours.add(right);
 
-        if (steps < 3) {
-            NodeTris straight = getNextNode(direction, grid, steps+1);
+        if (node.steps() < 3) {
+            NodeTris straight = getNextNode(node.direction(), grid, node.steps() + 1);
             if (straight != null) neighbours.add(straight);
         }
 
@@ -47,28 +52,28 @@ public class NodeTris implements Comparable<NodeTris> {
         int nextX = getNextX(direction);
         int nextY = getNextY(direction);
         if (nextX >= 0 && nextX < grid[0].length && nextY >= 0 && nextY < grid.length)
-            return new NodeTris(nextX, nextY, steps, direction, heatLoss + grid[nextY][nextX]);
+            return new NodeTris(new NodeBis(nextX, nextY, steps, direction), heatLoss + grid[nextY][nextX]);
         return null;
     }
 
     private int getNextX(int newDirection) {
-        return newDirection == NORTH || newDirection == SOUTH ? x : newDirection == EAST ? x + 1 : x - 1;
+        return newDirection == NORTH || newDirection == SOUTH ? node.x() : newDirection == EAST ? node.x() + 1 : node.x() - 1;
     }
 
     private int getNextY(int newDirection) {
-        return newDirection == EAST || newDirection == WEST ? y : newDirection == NORTH ? y - 1 : y + 1;
+        return newDirection == EAST || newDirection == WEST ? node.y() : newDirection == NORTH ? node.y() - 1 : node.y() + 1;
     }
 
     @Override
     public int compareTo(NodeTris node) {
-        if (this.heatLoss != node.getHeatLoss()) {
-            return Integer.compare(this.heatLoss, node.getHeatLoss());
-        } else if (this.direction == node.getDirection() && this.steps != node.getSteps()) {
-            return Integer.compare(this.steps, node.getSteps());
-        } else if (this.y != node.getY()) {
-            return Integer.compare(this.y, node.getY());
+        if (this.heatLoss != node.heatLoss()) {
+            return Integer.compare(this.heatLoss, node.heatLoss());
+        } else if (this.node.direction() == node.node.direction() && this.node.steps() != node.node.steps()) {
+            return Integer.compare(this.node.steps(), node.node.steps());
+        } else if (this.node.y() != node.node.y()) {
+            return Integer.compare(this.node.y(), node.node.y());
         } else {
-            return Integer.compare(this.x, node.getX());
+            return Integer.compare(this.node.x(), node.node.x());
         }
     }
 
@@ -76,25 +81,5 @@ public class NodeTris implements Comparable<NodeTris> {
     public boolean equals(Object node) {
         if (!(node instanceof NodeTris)) return false;
         return this.compareTo((NodeTris) node) == 0;
-    }
-
-    public int getHeatLoss() {
-        return heatLoss;
-    }
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public int getSteps() {
-        return steps;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }

@@ -10,13 +10,14 @@ import java.util.*;
 public class Problem17tris {
     public static void main(String[] args) throws FileNotFoundException {
         List<String> input = new LinkedList<>();
-        try (Scanner scanner = new Scanner(new File("res/it/samaki/adventOfCode2023/problem17/test1.txt"))) {
+        try (Scanner scanner = new Scanner(new File("res/it/samaki/adventOfCode2023/problem17/test2.txt"))) {
             while (scanner.hasNextLine())
                 input.add(scanner.nextLine());
         }
 
         int[][] grid = readGrid(input);
         System.out.println(dijkstra(grid, true));
+        System.out.println(dijkstra(grid, false));
     }
 
     private static int[][] readGrid(final List<String> input) {
@@ -48,13 +49,12 @@ public class Problem17tris {
             }
             visited.add(current.node());
             if (current.node().x() == endX && current.node().y() == endY
-                    && (part1 || current.node().blocks() >= 4)) {
+                    && (part1 || current.node().steps() >= 4)) {
                 return current.heatLoss();
             }
 
             queue.addAll(part1 ? current.getNeighbours(grid) : current.getNeighboursForPart2(grid));
         }
-
         return 0;
     }
 }

@@ -14,7 +14,7 @@ public record Element(NodeBis node, int heatLoss) implements Comparable<Element>
 
     public List<Element> getNeighboursForPart2(int[][] grid) {
         List<Element> neighbours = new ArrayList<>();
-        if (node.blocks() >= 4) {
+        if (node.steps() >= 4) {
             Element left = getNextElement(Math.floorMod(node.direction() - 1, 4), grid, 1);
             if (left != null) {
                 neighbours.add(left);
@@ -25,8 +25,8 @@ public record Element(NodeBis node, int heatLoss) implements Comparable<Element>
                 neighbours.add(right);
             }
         }
-        if (node.blocks() < 10) {
-            Element straight = getNextElement(node.direction(), grid, node.blocks() + 1);
+        if (node.steps() < 10) {
+            Element straight = getNextElement(node.direction(), grid, node.steps() + 1);
             if (straight != null) {
                 neighbours.add(straight);
             }
@@ -48,8 +48,8 @@ public record Element(NodeBis node, int heatLoss) implements Comparable<Element>
             neighbours.add(right);
         }
 
-        if (node.blocks() < 3) {
-            Element straight = getNextElement(node.direction(), grid, node.blocks() + 1);
+        if (node.steps() < 3) {
+            Element straight = getNextElement(node.direction(), grid, node.steps() + 1);
             if (straight != null) {
                 neighbours.add(straight);
             }
@@ -82,8 +82,8 @@ public record Element(NodeBis node, int heatLoss) implements Comparable<Element>
     public int compareTo(Element o) {
         if (this.heatLoss != o.heatLoss()) {
             return Integer.compare(this.heatLoss, o.heatLoss());
-        } else if (this.node.direction() == o.node().direction() && this.node.blocks() != o.node().blocks()) {
-            return Integer.compare(this.node.blocks(), o.node().blocks());
+        } else if (this.node.direction() == o.node().direction() && this.node.steps() != o.node().steps()) {
+            return Integer.compare(this.node.steps(), o.node().steps());
         } else if (this.node.y() != o.node().y()) {
             return Integer.compare(this.node.y(), o.node().y());
         } else {
