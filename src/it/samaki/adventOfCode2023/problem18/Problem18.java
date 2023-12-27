@@ -23,6 +23,11 @@ public class Problem18 {
 
         computeLine(input, diggedMap, dim);
         System.out.println("The lagoon could contain " + floodFill(new Node(Math.abs(dim[1])+1, Math.abs(dim[3])+1), diggedMap) + " cubic meters of lava.");
+
+        int[] dimPart2 = findMapDimPart2(input);
+        boolean[][] diggedMapPart2 = new boolean[dimPart2[2]-dimPart2[3]+1][dimPart2[0]-dimPart2[1]+1];
+
+        computeLinePart2(input, diggedMapPart2, dimPart2);
     }
 
     private static int[] findMapDim(LinkedList<String> input) {
@@ -69,7 +74,6 @@ public class Problem18 {
         Node current = new Node(Math.abs(dim[1]), Math.abs(dim[3]));
         char dir;
         int meters;
-        String color;
         Node last;
         Pattern p1 = Pattern.compile("\\d+");
         Matcher m1;
@@ -80,7 +84,6 @@ public class Problem18 {
             m1 = p1.matcher(s);
             m1.find();
             meters = Integer.parseInt(m1.group());
-            color = s.substring(m1.end()+1, s.length()-2);
 
             switch (dir) {
                 case 'R' -> {
@@ -99,6 +102,86 @@ public class Problem18 {
                         diggedMap[last.getY()][i] = true;
                 }
                 case 'U' -> {
+                    current.decrementY(meters);
+                    for (int i = last.getY(); i >= current.getY(); i--)
+                        diggedMap[i][last.getX()] = true;
+                }
+            }
+        }
+    }
+
+    private static int[] findMapDimPart2(LinkedList<String> input) {
+        Node current = new Node(0, 0);
+        char dir;
+        int meters;
+        int maxX = 0;
+        int minX = 0;
+        int maxY = 0;
+        int minY = 0;
+        Pattern p1 = Pattern.compile("#");
+        Matcher m1;
+        for (String s : input) {
+            m1 = p1.matcher(s);
+            m1.find();
+            meters = Integer.parseInt(s.substring(m1.end(), s.length()-2), 16);
+            dir = s.charAt(s.length()-2);
+
+            switch (dir) {
+                case '0' -> {
+                    current.incrementX(meters);
+                    if (current.getX() > maxX) maxX = current.getX();
+                }
+                case '1' -> {
+                    current.incrementY(meters);
+                    if (current.getY() > maxY) maxY = current.getY();
+                }
+                case '2' -> {
+                    current.decrementX(meters);
+                    if (current.getX() < minX) minX = current.getX();
+                }
+                case '3' -> {
+                    current.decrementY(meters);
+                    if (current.getY() < minY) minY = current.getY();
+                }
+            }
+        }
+        System.out.println(maxX+", "+minX+", "+maxY+", "+minY);
+        return new int[] {maxX, minX, maxY, minY};
+    }
+
+    private static void computeLinePart2(LinkedList<String> input, boolean[][] diggedMap, int[] dim) {
+        Node current = new Node(Math.abs(dim[1]), Math.abs(dim[3]));
+        char dir;
+        int meters;
+        Node last;
+        Pattern p1 = Pattern.compile("#");
+        Matcher m1;
+        for (String s : input) {
+            last = new Node(current.getX(), current.getY());
+
+            m1 = p1.matcher(s);
+            m1.find();
+
+            meters = Integer.parseInt(s.substring(m1.end(), s.length()-2), 16);
+            dir = s.charAt(s.length()-2);
+
+            switch (dir) {
+                case '0' -> {
+                    current.incrementX(meters);
+                    for (int i = last.getX(); i <= current.getX(); i++)
+                        diggedMap[last.getY()][i] = true;
+                }
+                case '1' -> {
+                    current.incrementY(meters);
+                    for(int i = last.getY(); i <= current.getY(); i++)
+                        diggedMap[i][last.getX()] = true;
+                }
+                case '2' -> {
+                    current.decrementX(meters);
+                    for (int i = last.getX(); i >= current.getX(); i--)
+                        diggedMap[last.getY()][i] = true;
+                }
+                case '3' -> {
                     current.decrementY(meters);
                     for (int i = last.getY(); i >= current.getY(); i--)
                         diggedMap[i][last.getX()] = true;
